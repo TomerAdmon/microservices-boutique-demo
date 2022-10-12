@@ -53,7 +53,7 @@ grains:
         post-helm-install:
           source:
             store: assets
-            path: scripts/get-external-frontend.sh
+            path: scripts/get-external-frontend-extended.sh
           outputs:
             - frontend
   health-check:
