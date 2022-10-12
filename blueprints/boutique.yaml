@@ -5,7 +5,16 @@ description: Auto generated blueprint for helm chart adservice
 inputs:
   host_name:
     type: execution-host
-
+    allowed-values: [tomer-dev-machine, demo-dev]
+    
+outputs:
+  Architecture Diagram:
+    value: 'https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/docs/img/architecture-diagram.png'
+    kind: link
+  Portal Link:
+    value: 'http://{{ grains.portal.scripts.post-helm-install.outputs.frontend}}'
+    kind: link
+    
 grains:
   tools:
     kind: helm
