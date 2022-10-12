@@ -1,0 +1,39 @@
+apiVersion: v2
+name: services
+description: A Helm chart for Kubernetes
+version: 0.1.0
+
+dependencies:
+  - name: frontend
+    repository: file://frontend
+    version: 0.1.0
+  - name: adservice
+    repository: file://adservice
+    version: 0.1.0
+  - name: cartservice
+    repository: file://cartservice
+    version: 0.1.0
+  - name: checkoutservice
+    repository: file://checkoutservice
+    version: 0.1.0
+  - name: currencyservice
+    repository: file://currencyservice
+    version: 0.1.0
+  - name: frontend
+    repository: file://frontend
+    version: 0.1.0
+  - name: frontend-external
+    repository: file://frontend-external
+    version: 0.1.0
+  - name: paymentservice
+    repository: file://paymentservice
+    version: 0.1.0
+  - name: productcatalogservice
+    repository: file://productcatalogservice
+    version: 0.1.0
+  - name: recommendationservice
+    repository: file://recommendationservice
+    version: 0.1.0
+  - name: shippingservice
+    repository: file://shippingservice
+    version: 0.1.0
