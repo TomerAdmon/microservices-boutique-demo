@@ -61,7 +61,7 @@ grains:
     depends-on: services
     spec:
       host:
-        name: '{{ inputs.host }}'
+        name: '{{ .inputs.host_name }}'
       env-vars:
       - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
       activities:
