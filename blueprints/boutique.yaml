@@ -1,0 +1,80 @@
+spec_version: 2
+description: Auto generated blueprint for helm chart adservice
+# blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
+
+inputs:
+  host_name:
+    type: execution-host
+    allowed-values: [tomer-dev-machine, demo-dev]
+    
+outputs:
+  Architecture Diagram:
+    value: 'https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/docs/img/architecture-diagram.png'
+    kind: link
+  Portal Link:
+    value: 'http://{{ grains.portal.scripts.post-helm-install.outputs.frontend}}'
+    kind: link
+    
+grains:
+  tools:
+    kind: helm
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm/tools
+      host:
+      # Execution Host - the platform where the asset executable will run.
+      # For example, a Kubernetes cluster can be used as an execution host.
+        name: '{{ .inputs.host_name }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs: []
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm/tools
+
+  services:
+    kind: helm
+    depends-on: tools
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm/services
+      host:
+      # Execution Host - the platform where the asset executable will run.
+      # For example, a Kubernetes cluster can be used as an execution host.
+        name: '{{ .inputs.host_name }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs: []
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm/services
+      scripts:
+        post-helm-install:
+          source:
+            store: assets
+            path: scripts/get-external-frontend-extended.sh
+          outputs:
+            - frontend
+  health-check:
+    kind: shell
+    depends-on: services
+    spec:
+      host:
+        name: '{{ .inputs.host_name }}'
+      env-vars:
+      - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
+      activities:
+        deploy:
+          commands:
+            - "apt-get -y install curl"
+            - "curl https://gist.githubusercontent.com/TomerAdmon/d8b23b7c0d67b396c4a352a2e0981612/raw/244548d7aa1544b342feeb52e8aae788d05ec171/wait_for_website.sh | /bin/bash"
