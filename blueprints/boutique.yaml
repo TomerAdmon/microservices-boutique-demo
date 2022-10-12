@@ -30,7 +30,7 @@ grains:
 
   services:
     kind: helm
-    depands-on: tools
+    depends-on: tools
     spec:
       source:
         store: microservices-boutique-demo
