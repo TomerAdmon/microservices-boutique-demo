@@ -179,7 +179,7 @@ spec:
         app: recommendationservice
     spec:
       serviceAccountName: default
-      terminationGracePeriodSeconds: 5
+      terminationGracePeriodSeconds: 6
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
