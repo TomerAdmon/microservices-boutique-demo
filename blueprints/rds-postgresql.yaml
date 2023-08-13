@@ -32,7 +32,7 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
-        - sandbox_id: '{{ sandboxid | downcase }}'
+        - sandbox_id: '{{ envId | downcase }}'
         - size: '{{ .inputs.["DB Size"] }}' 
         - allocated_storage: 20
         - db_name: demo_db
