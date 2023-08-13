@@ -26,8 +26,8 @@ grains:
     kind: terraform
     spec:
       source:
-        store: assets
-        path: assets/terraform/aws/rds
+        store: microservices-boutique-demo
+        path: terraform/rds
       agent:
         name: demo-dev
         service-account: torque-dev-sa
