@@ -13,7 +13,7 @@ outputs:
     value: 'https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/docs/img/architecture-diagram.png'
     kind: link
   Portal Link:
-    value: 'http://{{ grains.portal.scripts.post-helm-install.outputs.frontend}}'
+    value: 'http://{{ grains.services.scripts.post-helm-install.outputs.frontend}}'
     kind: link
     
 grains:
