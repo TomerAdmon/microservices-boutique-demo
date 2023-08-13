@@ -39,7 +39,6 @@ module "cloudwatch_logs" {
   version = "0.6.5"
   
   iam_tags_enabled = false
-  tags_enabled = false
   context = module.this.context
 }
 
