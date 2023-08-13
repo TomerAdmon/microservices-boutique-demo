@@ -53,9 +53,8 @@ grains:
       ##namespace: '{{ .inputs.namespace }}'
       agent:
       # The Torque agent that will be used to provision the environment.
-        name: '{{ .inputs.agent }}'
-        # A service account annotated with a role ARN with permissions to run the asset
-        # service-account: <service-account-name>
+        name: demo-dev
+        service-account: torque-dev-sa
       inputs:
       - namespace: '{{ sandboxid | downcase }}'
       # Helm commands to run before installing the chart
@@ -71,10 +70,10 @@ grains:
         store: microservices-boutique-demo
         path: helm/tools
       namespace: '{{ sandboxid | downcase }}'
-      host:
-      # Execution Host - the platform where the asset executable will run.
-      # For example, a Kubernetes cluster can be used as an execution host.
-        name: '{{ .inputs.host_name }}'
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
         # A service account annotated with a role ARN with permissions to run the asset
         # service-account: <service-account-name>
       inputs: []
@@ -95,10 +94,10 @@ grains:
         store: microservices-boutique-demo
         path: helm/services
       namespace: '{{ sandboxid | downcase }}'
-      host:
-      # Execution Host - the platform where the asset executable will run.
-      # For example, a Kubernetes cluster can be used as an execution host.
-        name: '{{ .inputs.host_name }}'
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
         # A service account annotated with a role ARN with permissions to run the asset
         # service-account: <service-account-name>
       inputs: []
@@ -121,8 +120,10 @@ grains:
     kind: shell
     depends-on: services
     spec:
-      host:
-        name: '{{ .inputs.host_name }}'
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
       env-vars:
       - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
       activities:
