@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-      version = ">3.0.0"
+      version = "~>4.0"
     }
   }
 }
@@ -36,9 +36,13 @@ resource "aws_default_vpc" "default" {
 
 data "aws_subnet_ids" "apps_subnets" {
   vpc_id = "${aws_default_vpc.default.id}"
+  filter {
+    name = "tag:Name"
+    values = ["app-rds*"]
+  }
 }
 
-resource "aws_db_subnet_group" "rds" {
+resource "aws_db_subnet_group" "rds_subnet_group" {
   name = "rds-${var.sandbox_id}-subnet-group"
   subnet_ids = data.aws_subnet_ids.apps_subnets.ids
 
@@ -47,7 +51,7 @@ resource "aws_db_subnet_group" "rds" {
   }
 }
 
-resource "aws_security_group" "rds" {
+resource "aws_security_group" "rds_security_group" {
   name        = "rds-${var.sandbox_id}_sg"
   description = "Allow all inbound traffic"
   vpc_id      = "${aws_default_vpc.default.id}"
@@ -68,7 +72,7 @@ resource "aws_security_group" "rds" {
 }
 
 
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "rds_instance" {
   allocated_storage    = var.allocated_storage
   storage_type         = var.storage_type
   engine               = var.engine
@@ -79,8 +83,8 @@ resource "aws_db_instance" "default" {
   username             = "${var.username}"
   password             = "${random_password.password.result}"
   publicly_accessible  = true
-  db_subnet_group_name = "${aws_db_subnet_group.rds.id}"
-  vpc_security_group_ids    = ["${aws_security_group.rds.id}"]
+  db_subnet_group_name = "${aws_db_subnet_group.rds_subnet_group.id}"
+  vpc_security_group_ids    = ["${aws_security_group.rds_security_group.id}"]
   skip_final_snapshot       = true
   final_snapshot_identifier = "Ignore"
 }
