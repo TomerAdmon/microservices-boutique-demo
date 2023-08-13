@@ -20,7 +20,6 @@ import time
 import traceback
 from concurrent import futures
 
-import googleclouddebugger
 import googlecloudprofiler
 from google.auth.exceptions import DefaultCredentialsError
 import grpc
@@ -29,6 +28,12 @@ import demo_pb2
 import demo_pb2_grpc
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
+
+from opentelemetry import trace
+from opentelemetry.instrumentation.grpc import GrpcInstrumentorClient, GrpcInstrumentorServer
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 
 from logger import getJSONLogger
 logger = getJSONLogger('recommendationservice-server')
@@ -99,32 +104,25 @@ if __name__ == "__main__":
         logger.info("Profiler disabled.")
 
     try:
-      if "DISABLE_TRACING" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Tracing enabled, but temporarily unavailable")
-        logger.info("See https://github.com/GoogleCloudPlatform/microservices-demo/issues/422 for more info.")
+      grpc_client_instrumentor = GrpcInstrumentorClient()
+      grpc_client_instrumentor.instrument()
+      grpc_server_instrumentor = GrpcInstrumentorServer()
+      grpc_server_instrumentor.instrument()
+      if os.environ["ENABLE_TRACING"] == "1":
+        trace.set_tracer_provider(TracerProvider())
+        otel_endpoint = os.getenv("COLLECTOR_SERVICE_ADDR", "localhost:4317")
+        trace.get_tracer_provider().add_span_processor(
+          BatchSpanProcessor(
+              OTLPSpanExporter(
+              endpoint = otel_endpoint,
+              insecure = True
+            )
+          )
+        )
     except (KeyError, DefaultCredentialsError):
         logger.info("Tracing disabled.")
     except Exception as e:
         logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.") 
-   
-    try:
-      if "DISABLE_DEBUGGER" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Debugger enabled.")
-        try:
-          googleclouddebugger.enable(
-              module='recommendationserver',
-              version='1.0.0'
-          )
-        except (Exception, DefaultCredentialsError):
-            logger.error("Could not enable debugger")
-            logger.error(traceback.print_exc())
-            pass
-    except (Exception, DefaultCredentialsError):
-        logger.info("Debugger disabled.")
 
     port = os.environ.get('PORT', "8080")
     catalog_addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR', '')

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM node:18-alpine as base
+FROM node:20.5.1-alpine@sha256:254989045b0555ee411cd8fe7bd8e3ae306fef34b4c9d5dfd020bdda86cdad97 as base
 
 FROM base as builder
 
@@ -21,7 +21,7 @@ FROM base as builder
 RUN apk add --update --no-cache \
     python3 \
     make \
-    g++ 
+    g++
 
 WORKDIR /usr/src/app
 
@@ -30,10 +30,6 @@ COPY package*.json ./
 RUN npm install --only=production
 
 FROM base
-
-RUN GRPC_HEALTH_PROBE_VERSION=v0.4.13 && \
-    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-    chmod +x /bin/grpc_health_probe
 
 WORKDIR /usr/src/app
 
