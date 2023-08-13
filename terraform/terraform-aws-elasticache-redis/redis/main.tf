@@ -36,13 +36,13 @@ module "aws_security_group" {
 
   enabled = local.create_security_group
 
-  allow_all_egress    = local.allow_all_egress
+  allow_all_egress    = var.allow_all_egress
   security_group_name = var.security_group_name
   rules_map           = local.sg_rules
   rule_matrix = [{
     key                       = "in"
     source_security_group_ids = local.allowed_security_group_ids
-    cidr_blocks               = var.allowed_cidr_blocks
+    cidr_blocks               = ["0.0.0.0/0"]
     rules = [{
       key         = "in"
       type        = "ingress"
