@@ -9,7 +9,7 @@ output "security_group_id" {
 }
 
 output "security_group_name" {
-  value       = module.aws_security_group.name
+  value       = aws_security_group.aws_security_group.name
   description = "The name of the created security group"
 }
 
