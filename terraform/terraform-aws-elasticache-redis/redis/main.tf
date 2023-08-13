@@ -12,7 +12,7 @@ locals {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow outbound traffic to existing CIDR blocks"
-  } : null
+  }
 
   legacy_cidr_ingress_rule = {
     key         = "legacy-cidr-ingress"
@@ -129,7 +129,7 @@ resource "aws_elasticache_replication_group" "default" {
   # It would be nice to remove null or duplicate security group IDs, if there are any, using `compact`,
   # but that causes problems, and having duplicates does not seem to cause problems.
   # See https://github.com/hashicorp/terraform/issues/29799
-  security_group_ids         = local.create_security_group ? concat(local.associated_security_group_ids, [module.aws_security_group.id]) : local.associated_security_group_ids
+  security_group_ids         = local.create_security_group ? [module.aws_security_group.id] : local.associated_security_group_ids
   maintenance_window         = var.maintenance_window
   notification_topic_arn     = var.notification_topic_arn
   engine_version             = var.engine_version
