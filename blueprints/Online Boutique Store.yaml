@@ -100,7 +100,7 @@ grains:
       source:
         store: microservices-boutique-demo
         path: helm/services
-      namespace: '{{ sandboxid | downcase }}'
+      namespace: '{{ .inputs.namespace }}'
       agent:
       # The Torque agent that will be used to provision the environment.
         name: demo-dev
