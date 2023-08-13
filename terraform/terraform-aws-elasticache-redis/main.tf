@@ -42,7 +42,7 @@ module "cloudwatch_logs" {
 }
 
 module "redis" {
-  source = "../redis/"
+  source = "./redis/"
 
   availability_zones               = var.availability_zones
   zone_id                          = [aws_route53_zone.private.id]
