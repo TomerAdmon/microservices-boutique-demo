@@ -7,9 +7,6 @@ inputs:
     default: "small"
     description: "The instance type of the RDS instance. Small, medium, or large."
     allowed-values: ["small", "medium", "large"]
-  VPC id:
-    type: string
-    default: "vpc-02e3bca90b081cd0f"
 
 
 # values that starts with '{' for liquid template must be encosed with quotes so YAML won't consider them as dict
@@ -39,7 +36,6 @@ grains:
         - engine_version: 14
         - engine: postgres
         - username: adminuser
-        - vpc_id: '{{ .inputs.["VPC id"] }}'
         - region: eu-west-1
       outputs:
         - hostname

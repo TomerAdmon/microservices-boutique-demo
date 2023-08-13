@@ -14,9 +14,9 @@ provider "aws" {
 
 locals {
   sizeMap = {
-    "small" = "db.t2.small"
-    "medium" = "db.t2.medium"
-    "large" = "db.t2.large"
+    "small" = "db.m5.large"
+    "medium" = "db.m5.xlarge"
+    "large" = "db.m5.2large"
   }
   instance_class = lookup(local.sizeMap, lower(var.size), "db.t4g.medium")
   # sandbox_id = "sb${substr( uuid() , 0 ,6)}"

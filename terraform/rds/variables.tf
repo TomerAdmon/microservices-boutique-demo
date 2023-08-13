@@ -12,7 +12,7 @@ variable "username" {
 
 variable "region" {
   description = "Region of RDS"
-  default = "us-east-1"
+  default = "eu-west-1"
 }
 
 variable "engine" {
@@ -28,8 +28,8 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  description = "Version of RDS Engine. Default is 8.0.26"
-  default = "8.0.26"
+  description = "Version of RDS Engine. Default is 8.0.32"
+  default = "8.0.32"
 }
 variable "storage_type" {
   description = "One of standard (magnetic), gp2 (general purpose SSD), or io1 (provisioned IOPS SSD). Default is gp2"
