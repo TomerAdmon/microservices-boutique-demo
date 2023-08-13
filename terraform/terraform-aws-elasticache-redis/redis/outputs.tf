@@ -4,7 +4,7 @@ output "id" {
 }
 
 output "security_group_id" {
-  value       = module.aws_security_group.id
+  value       = aws_security_group.aws_security_group.id
   description = "The ID of the created security group"
 }
 
