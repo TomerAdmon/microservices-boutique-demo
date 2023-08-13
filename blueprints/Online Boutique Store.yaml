@@ -1,6 +1,11 @@
 spec_version: 2
 description: Online Boutique production-like deployment for AWS
 
+instructions:
+  source:
+    store: microservices-boutique-demo
+    path: instructions/OBS.md
+
 inputs:
   DB Size:
     type: string
@@ -18,33 +23,34 @@ outputs:
     
 grains:
   rds-postgresql:
-    kind: terraform
+    kind: blueprint
     spec:
-      source:
+      source: 
         store: microservices-boutique-demo
-        path: terraform/rds
+        path: blueprints
       agent:
-      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
+      outputs:
+        - connection_string
+
+  elasticache-redis:
+    kind: blueprint
+    spec:
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
-        - sandbox_id: '{{ sandboxid | downcase }}'
-        - size: '{{ .inputs.["DB Size"] }}' 
-        - allocated_storage: 20
-        - db_name: demo_db
-        - engine_version: 8.0.32
-        - engine: MySQL
-        - username: adminuser
-        - vpc_id: vpc-02e3bca90b081cd0f
-        - region: us-east-1
+        - cluster_size: 1
       outputs:
-        - hostname
-        - connection_string
-    tf-version: 1.5.5
-
+        - cluster_endpoint
+  
   namespace:
     kind: helm
-    depends-on: rds-postgresql
+    depends-on: rds-postgresql, elasticache-redis
     spec:
       source:
         store: microservices-boutique-demo
@@ -56,11 +62,10 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
-      - namespace: '{{ sandboxid | downcase }}'
+      - namespace: '{{ envId | downcase }}'
       # Helm commands to run before installing the chart
       commands:
       - dep up helm/namespace
-
 
   tools:
     kind: helm
@@ -69,7 +74,7 @@ grains:
       source:
         store: microservices-boutique-demo
         path: helm/tools
-      namespace: '{{ sandboxid | downcase }}'
+      namespace: '{{ envId | downcase }}'
       agent:
       # The Torque agent that will be used to provision the environment.
         name: demo-dev
@@ -84,7 +89,6 @@ grains:
       # Helm commands to run before installing the chart
       commands:
       - dep up helm/tools
-  
 
   services:
     kind: helm
@@ -93,7 +97,7 @@ grains:
       source:
         store: microservices-boutique-demo
         path: helm/services
-      namespace: '{{ sandboxid | downcase }}'
+      namespace: '{{ envId | downcase }}'
       agent:
       # The Torque agent that will be used to provision the environment.
         name: demo-dev

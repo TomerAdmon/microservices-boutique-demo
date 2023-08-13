@@ -1,0 +1,14 @@
+REDIS_ADDR: "redis-cart:6379"
+REDIS_IP
+REDIS_PORT
+
+##REDIS_IP=0.0.0.0
+##REDIS_PORT=7378
+##REDIS_CERT=dsjfgkldsjflkdsjflksdajfkldsjkfljsdaklfjaskjfakdsjfaklsdjflskadjfklasjfkls
+##helm template . \
+##  --set cartDatabase.inClusterRedis.create=false \
+##  --set cartDatabase.connectionString=${REDIS_IP}:${REDIS_PORT} \
+##  --set cartDatabase.externalRedisTlsOrigination.enable=true \
+##  --set cartDatabase.externalRedisTlsOrigination.certificate="${REDIS_CERT}" \
+##  --set cartDatabase.externalRedisTlsOrigination.endpointAddress=${REDIS_IP} \
+##  --set cartDatabase.externalRedisTlsOrigination.endpointPort=${REDIS_PORT} \

@@ -1,0 +1,46 @@
+spec_version: 2
+description: RDS deployment using TF
+
+inputs:
+  DB Size:
+    type: string
+    default: "small"
+    description: "The instance type of the RDS instance. Small, medium, or large."
+    allowed-values: ["small", "medium", "large"]
+  VPC id:
+    type: string
+    default: "vpc-02e3bca90b081cd0f"
+
+
+# values that starts with '{' for liquid template must be encosed with quotes so YAML won't consider them as dict
+outputs:
+  connection_string:
+    value: '{{ .grains.MySQL_RDS_DB.outputs.hostname }}'
+    quick: false
+  Documentation Page:
+    value: "https://quali.atlassian.net/wiki/spaces/QS/pages/2710142977/Robot+Shop+Stan+s+Robot+Shop"
+    quick: true
+
+grains:
+  MySQL_RDS_DB:
+    kind: terraform
+    spec:
+      source:
+        store: assets
+        path: assets/terraform/aws/rds
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      inputs:
+        - sandbox_id: '{{ sandboxid | downcase }}'
+        - size: '{{ .inputs.["DB Size"] }}' 
+        - allocated_storage: 20
+        - db_name: demo_db
+        - engine_version: 14
+        - engine: postgres
+        - username: adminuser
+        - vpc_id: '{{ .inputs.["VPC id"] }}'
+        - region: eu-west-1
+      outputs:
+        - hostname
+        - connection_string
