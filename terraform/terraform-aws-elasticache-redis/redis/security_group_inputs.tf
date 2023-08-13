@@ -9,21 +9,9 @@ variable "create_security_group" {
 }
 
 locals {
-  create_security_group = local.enabled && (var.use_existing_security_groups == null ? var.create_security_group : !var.use_existing_security_groups)
+  create_security_group = true
 }
 
-variable "associated_security_group_ids" {
-  type        = list(string)
-  default     = []
-  description = <<-EOT
-    A list of IDs of Security Groups to associate the created resource with, in addition to the created security group.
-    These security groups will not be modified and, if `create_security_group` is `false`, must provide all the required access.
-    EOT
-}
-
-locals {
-  associated_security_group_ids = concat(var.existing_security_groups, var.associated_security_group_ids)
-}
 
 variable "allowed_security_group_ids" {
   type        = list(string)
@@ -90,7 +78,7 @@ variable "security_group_delete_timeout" {
 
 variable "allow_all_egress" {
   type        = bool
-  default     = null
+  default     = false
   description = <<-EOT
     If `true`, the created security group will allow egress on all ports and protocols to all IP address.
     If this is false and no egress rules are otherwise specified, then no egress will be allowed.
