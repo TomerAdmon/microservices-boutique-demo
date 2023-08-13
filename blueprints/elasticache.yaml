@@ -1,0 +1,89 @@
+spec_version: 2
+description: Auto generated blueprint for terraform module terraform-aws-elasticache-redis
+# blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
+inputs:
+  cluster_size:
+    type: string
+    default: 1
+    description: Number of nodes in cluster
+# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
+outputs:
+  cluster_arn:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_arn }}'
+    quick: true
+  cluster_enabled:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_enabled }}'
+    quick: true
+  cluster_endpoint:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_endpoint }}'
+    quick: true
+  cluster_host:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_host }}'
+    quick: true
+  cluster_id:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_id }}'
+    quick: true
+  cluster_reader_endpoint_address:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_reader_endpoint_address }}'
+    quick: true
+  cluster_security_group_id:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_security_group_id }}'
+    quick: true
+  engine_version_actual:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.engine_version_actual }}'
+    quick: true
+  private_subnet_cidrs:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.private_subnet_cidrs }}'
+    quick: true
+  public_subnet_cidrs:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.public_subnet_cidrs }}'
+    quick: true
+  vpc_cidr:
+    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.vpc_cidr }}'
+    quick: true
+grains:
+  terraform-aws-elasticache-redis:
+    kind: terraform
+    spec:
+      tags:
+        auto-tag: false
+      source:
+        store: microservices-boutique-demo
+        path: terraform/terraform-aws-elasticache-redis
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
+      inputs:
+      - at_rest_encryption_enabled: false
+      - availability_zones: '["eu-west-1a", "eu-west-1b"]'
+      - cloudwatch_metric_alarms_enabled: false
+      - cluster_size: '{{ .inputs.cluster_size }}'
+      - enabled: true
+      - engine_version: 6.x
+      - family: redis6.x
+      - instance_type: cache.t4g.micro
+      - name: redis-test-{{ sandboxid | downcase }}'
+      - namespace: eg
+      - region: eu-west-1
+      - sg_name: sg-{{ sandboxid | downcase }}'
+      - stage: test
+      - transit_encryption_enabled: false
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      outputs:
+      - cluster_arn
+      - cluster_enabled
+      - cluster_endpoint
+      - cluster_host
+      - cluster_id
+      - cluster_reader_endpoint_address
+      - cluster_security_group_id
+      - engine_version_actual
+      - private_subnet_cidrs
+      - public_subnet_cidrs
+      - vpc_cidr
+    # The terraform version that will be used to deploy the module
+    tf-version: 1.5.5
