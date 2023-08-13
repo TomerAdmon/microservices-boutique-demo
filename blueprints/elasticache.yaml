@@ -10,10 +10,8 @@ inputs:
 outputs:
   cluster_arn:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_arn }}'
-    quick: true
   cluster_enabled:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_enabled }}'
-    quick: true
   cluster_endpoint:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_endpoint }}'
     quick: true
@@ -28,19 +26,14 @@ outputs:
     quick: true
   cluster_security_group_id:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_security_group_id }}'
-    quick: true
   engine_version_actual:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.engine_version_actual }}'
-    quick: true
   private_subnet_cidrs:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.private_subnet_cidrs }}'
-    quick: true
   public_subnet_cidrs:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.public_subnet_cidrs }}'
-    quick: true
   vpc_cidr:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.vpc_cidr }}'
-    quick: true
 grains:
   terraform-aws-elasticache-redis:
     kind: terraform
@@ -49,7 +42,7 @@ grains:
         auto-tag: false
       source:
         store: microservices-boutique-demo
-        path: terraform/terraform-aws-elasticache-redis
+        path: terraform/elasticache-redis
       agent:
       # The Torque agent that will be used to provision the environment.
         name: demo-dev

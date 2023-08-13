@@ -1,0 +1,132 @@
+spec_version: 2
+description: Online Boutique production-like deployment for AWS
+
+inputs:
+  DB Size:
+    type: string
+    default: "small"
+    description: "The instance type of the RDS instance. Small, medium, or large."
+    allowed-values: ["small", "medium", "large"]    
+
+outputs:
+  Architecture Diagram:
+    value: 'https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/docs/img/architecture-diagram.png'
+    kind: link
+  Portal Link:
+    value: 'http://{{ grains.portal.scripts.post-helm-install.outputs.frontend}}'
+    kind: link
+    
+grains:
+  rds-postgresql:
+    kind: terraform
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: terraform/rds
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
+      inputs:
+        - sandbox_id: '{{ sandboxid | downcase }}'
+        - size: '{{ .inputs.["DB Size"] }}' 
+        - allocated_storage: 20
+        - db_name: demo_db
+        - engine_version: 8.0.32
+        - engine: MySQL
+        - username: adminuser
+        - vpc_id: vpc-02e3bca90b081cd0f
+        - region: us-east-1
+      outputs:
+        - hostname
+        - connection_string
+    tf-version: 1.5.5
+
+  namespace:
+    kind: helm
+    depends-on: rds-postgresql
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm/namespace
+     
+      ##namespace: '{{ .inputs.namespace }}'
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: '{{ .inputs.agent }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs:
+      - namespace: '{{ sandboxid | downcase }}'
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm/namespace
+
+
+  tools:
+    kind: helm
+    depends-on: namespace
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm/tools
+      namespace: '{{ sandboxid | downcase }}'
+      host:
+      # Execution Host - the platform where the asset executable will run.
+      # For example, a Kubernetes cluster can be used as an execution host.
+        name: '{{ .inputs.host_name }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs: []
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm/tools
+  
+
+  services:
+    kind: helm
+    depends-on: tools
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm/services
+      namespace: '{{ sandboxid | downcase }}'
+      host:
+      # Execution Host - the platform where the asset executable will run.
+      # For example, a Kubernetes cluster can be used as an execution host.
+        name: '{{ .inputs.host_name }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs: []
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm/services
+      scripts:
+        post-helm-install:
+          source:
+            store: assets
+            path: scripts/get-external-frontend-extended.sh
+          outputs:
+            - frontend
+  
+  health-check:
+    kind: shell
+    depends-on: services
+    spec:
+      host:
+        name: '{{ .inputs.host_name }}'
+      env-vars:
+      - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
+      activities:
+        deploy:
+          commands:
+            - "apt-get -y install curl"
+            - "curl https://gist.githubusercontent.com/TomerAdmon/d8b23b7c0d67b396c4a352a2e0981612/raw/244548d7aa1544b342feeb52e8aae788d05ec171/wait_for_website.sh | /bin/bash"
