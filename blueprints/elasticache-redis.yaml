@@ -56,10 +56,10 @@ grains:
       - engine_version: 6.x
       - family: redis6.x
       - instance_type: cache.t4g.micro
-      - name: redis-test-{{ envId | downcase }}'
+      - name: 'redis-test-{{ sandboxid  | downcase }}'
       - namespace: eg
       - region: eu-west-1
-      - sg_name: sg-{{ envId | downcase }}'
+      - sg_name: 'sg-{{ sandboxid | downcase }}'
       - stage: test
       - transit_encryption_enabled: false
       # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase

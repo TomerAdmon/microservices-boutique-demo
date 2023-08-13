@@ -62,7 +62,7 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
-      - namespace: '{{ envId | downcase }}'
+      - namespace: '{{ sandboxid | downcase }}'
       # Helm commands to run before installing the chart
       commands:
       - dep up helm/namespace
@@ -74,7 +74,7 @@ grains:
       source:
         store: microservices-boutique-demo
         path: helm/tools
-      namespace: '{{ envId | downcase }}'
+      namespace: '{{ sandboxid | downcase }}'
       agent:
       # The Torque agent that will be used to provision the environment.
         name: demo-dev
@@ -97,7 +97,7 @@ grains:
       source:
         store: microservices-boutique-demo
         path: helm/services
-      namespace: '{{ envId | downcase }}'
+      namespace: '{{ sandboxid | downcase }}'
       agent:
       # The Torque agent that will be used to provision the environment.
         name: demo-dev
