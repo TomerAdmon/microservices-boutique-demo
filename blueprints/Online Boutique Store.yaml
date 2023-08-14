@@ -15,14 +15,6 @@ inputs:
   namespace:
     type: string
     default: "app-deployment"
-
-outputs:
-  Architecture Diagram:
-    value: 'https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/docs/img/architecture-diagram.png'
-    kind: link
-  Portal Link:
-    value: 'http://{{ grains.services.scripts.post-helm-install.outputs.frontend}}'
-    kind: link
     
 grains:
   elasticache-complete:
@@ -40,6 +32,7 @@ grains:
   
   peering: 
     kind: blueprint
+    depends-on: elasticache-complete
     spec:
       source: 
         store: microservices-boutique-demo
