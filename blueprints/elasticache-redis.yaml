@@ -20,27 +20,23 @@ inputs:
 # blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
 outputs:
   cluster_arn:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_arn }}'
+    value: '{{ .grains.elasticache-redis.outputs.cluster_arn }}'
   cluster_enabled:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_enabled }}'
+    value: '{{ .grains.elasticache-redis.outputs.cluster_enabled }}'
   cluster_endpoint:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_endpoint }}'
-    quick: true
+    value: '{{ .grains.elasticache-redis.outputs.cluster_endpoint }}'
   cluster_host:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_host }}'
-    quick: true
+    value: '{{ .grains.elasticache-redis.outputs.cluster_host }}'
   cluster_id:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_id }}'
-    quick: true
+    value: '{{ .grains.elasticache-redis.outputs.cluster_id }}'
   cluster_reader_endpoint_address:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_reader_endpoint_address }}'
-    quick: true
+    value: '{{ .grains.elasticache-redis.outputs.cluster_reader_endpoint_address }}'
   cluster_security_group_id:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_security_group_id }}'
+    value: '{{ .grains.elasticache-redis.outputs.cluster_security_group_id }}'
   engine_version_actual:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.engine_version_actual }}'
+    value: '{{ .grains.elasticache-redis.outputs.engine_version_actual }}'
 grains:
-  terraform-aws-elasticache-redis:
+  elasticache-redis:
     kind: terraform
     spec:
       tags:
