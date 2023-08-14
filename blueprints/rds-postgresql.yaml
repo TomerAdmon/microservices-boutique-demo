@@ -1,5 +1,5 @@
 spec_version: 2
-description: RDS deployment using TF
+description: postgresql RDS deployment using TF
 
 inputs:
   DB Size:
@@ -12,14 +12,14 @@ inputs:
 # values that starts with '{' for liquid template must be encosed with quotes so YAML won't consider them as dict
 outputs:
   connection_string:
-    value: '{{ .grains.MySQL_RDS_DB.outputs.hostname }}'
+    value: '{{ .grains.postgresql.outputs.hostname }}'
     quick: false
   Documentation Page:
     value: "https://quali.atlassian.net/wiki/spaces/QS/pages/2710142977/Robot+Shop+Stan+s+Robot+Shop"
     quick: true
 
 grains:
-  MySQL_RDS_DB:
+  postgresql:
     kind: terraform
     spec:
       source:
