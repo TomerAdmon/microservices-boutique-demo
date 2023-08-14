@@ -9,6 +9,10 @@ outputs:
     value: '{{ .grains.network.outputs.public_subnet_cidrs }}'
   vpc_cidr:
     value: '{{ .grains.network.outputs.vpc_cidr }}'
+  vpc_id:
+    value: '{{ .grains.network.outputs.vpc_id }}'
+  vpc_default_security_group_id:
+    value: '{{ .grains.network.outputs.vpc_default_security_group_id }}'
 grains:
   network:
     kind: terraform
@@ -30,5 +34,7 @@ grains:
       - private_subnet_cidrs
       - public_subnet_cidrs
       - vpc_cidr
+      - vpc_id
+      - vpc_default_security_group_id
     # The terraform version that will be used to deploy the module
     tf-version: 1.5.5

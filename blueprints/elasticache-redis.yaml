@@ -6,6 +6,17 @@ inputs:
     type: string
     default: 1
     description: Number of nodes in cluster
+  public_subnet_cidrs:
+    type: string
+  private_subnet_cidrs:
+    type: string
+  vpc_cidr:
+    type: string
+  vpc_id:
+    type: string
+  vpc_default_security_group_id:
+    type: string
+
 # blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
 outputs:
   cluster_arn:
@@ -28,12 +39,6 @@ outputs:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.cluster_security_group_id }}'
   engine_version_actual:
     value: '{{ .grains.terraform-aws-elasticache-redis.outputs.engine_version_actual }}'
-  private_subnet_cidrs:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.private_subnet_cidrs }}'
-  public_subnet_cidrs:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.public_subnet_cidrs }}'
-  vpc_cidr:
-    value: '{{ .grains.terraform-aws-elasticache-redis.outputs.vpc_cidr }}'
 grains:
   terraform-aws-elasticache-redis:
     kind: terraform
@@ -48,6 +53,11 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
+      - public_subnet_cidrs: '{{ .inputs.public_subnet_cidrs }}'
+      - private_subnet_cidrs: '{{ .inputs.private_subnet_cidrs }}'
+      - vpc_cidr: '{{ .inputs.vpc_cidr }}'
+      - vpc_id: '{{ .inputs.vpc_id }}' 
+      - vpc_default_security_group_id: '{{ .inputs.vpc_default_security_group_id }}'
       - at_rest_encryption_enabled: false
       - availability_zones: '["eu-west-1a", "eu-west-1b"]'
       - cloudwatch_metric_alarms_enabled: false
@@ -75,8 +85,5 @@ grains:
       - cluster_reader_endpoint_address
       - cluster_security_group_id
       - engine_version_actual
-      - private_subnet_cidrs
-      - public_subnet_cidrs
-      - vpc_cidr
     # The terraform version that will be used to deploy the module
     tf-version: 1.5.5

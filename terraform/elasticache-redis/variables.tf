@@ -3,6 +3,32 @@ variable "region" {
   description = "AWS region"
 }
 
+
+variable "public_subnet_cidrs" {
+  type        = string
+  description = "Public subnet CIDRs"
+}
+
+variable "private_subnet_cidrs" {
+  type        = string
+  description = "Private subnet CIDRs"
+}
+
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR"
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID"
+}
+
+variable "vpc_default_security_group_id" {
+  type        = string
+  description = "VPC SG ID"
+}
+
 variable "availability_zones" {
   type        = list(string)
   description = "Availability zone IDs"

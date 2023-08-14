@@ -1,0 +1,43 @@
+spec_version: 2
+description: Auto generated blueprint for terraform module terraform-aws-elasticache-redis
+
+outputs:
+  cluster_arn:
+    value: '{{ .grains.elasticache-redis.outputs.cluster_endpoint }}'
+    
+grains:
+  network:
+    kind: blueprint
+    spec:
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      outputs:
+      - private_subnet_cidrs
+      - public_subnet_cidrs
+      - vpc_cidr
+      - vpc_id
+      - vpc_default_security_group_id
+
+  elasticache-redis:
+    kind: blueprint
+    depends-on: network
+    spec:
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      inputs:
+      - cluster_size: 1
+      - public_subnet_cidrs: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+      - private_subnet_cidrs: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+      - vpc_cidr: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+      - vpc_id: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+      - vpc_default_security_group_id: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+      outputs:
+        - cluster_endpoint

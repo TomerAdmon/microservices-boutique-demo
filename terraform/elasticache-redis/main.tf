@@ -7,7 +7,7 @@ resource "aws_route53_zone" "private" {
   name = format("elasticache-redis-terratest-%s.testing.cloudposse.co", try(module.this.attributes[0], "default"))
 
   vpc {
-    vpc_id = module.vpc.vpc_id
+    vpc_id = var.vpc_id
   }
 }
 
@@ -24,9 +24,9 @@ module "redis" {
 
   availability_zones               = var.availability_zones
   zone_id                          = [aws_route53_zone.private.id]
-  vpc_id                           = module.vpc.vpc_id
-  allowed_security_groups          = [module.vpc.vpc_default_security_group_id]
-  subnets                          = module.subnets.private_subnet_ids
+  vpc_id                           = var.vpc_id
+  allowed_security_groups          = [var.vpc_default_security_group_id]
+  subnets                          = var.private_subnet_ids
   cluster_size                     = var.cluster_size
   instance_type                    = var.instance_type
   apply_immediately                = true
