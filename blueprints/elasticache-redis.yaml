@@ -68,7 +68,7 @@ grains:
       - instance_type: cache.t4g.micro
       - name: 'redis-test-{{ sandboxid  | downcase }}'
       - namespace: eg
-      - region: eu-west-1
+      - region: us-east-1
       - sg_name: 'sg-{{ sandboxid | downcase }}'
       - stage: test
       - transit_encryption_enabled: false
