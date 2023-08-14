@@ -5,12 +5,12 @@ variable "region" {
 
 
 variable "public_subnet_ids" {
-  type        = string
+  type        = list(string)
   description = "Public subnet IDs"
 }
 
 variable "private_subnet_ids" {
-  type        = string
+  type        = list(string)
   description = "Private subnet IDs"
 }
 
