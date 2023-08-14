@@ -183,7 +183,7 @@ shippingService:
 cartDatabase:
   # Specifies the type of the cartservice's database, could be either redis or spanner.
   type: redis
-  connectionString: "eg-test-redis-test-vmbyvpysnu4a.xssdvh.ng.0001.euw1.cache.amazonaws.com:6379"
+  connectionString: "eg-test-redis-test-flwmz0ynktfj.2fifor.ng.0001.use1.cache.amazonaws.com:6379"
   inClusterRedis:
     create: false
     name: redis-cart

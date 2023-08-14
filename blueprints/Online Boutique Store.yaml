@@ -25,7 +25,19 @@ outputs:
     kind: link
     
 grains:
-  rds-postgresql:
+  # rds-postgresql:
+  #   kind: blueprint
+  #   spec:
+  #     source: 
+  #       store: microservices-boutique-demo
+  #       path: blueprints
+  #     agent:
+  #       name: demo-dev
+  #       service-account: torque-dev-sa
+  #     outputs:
+  #       - connection_string
+
+  elasticache-complete:
     kind: blueprint
     spec:
       source: 
@@ -35,9 +47,10 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       outputs:
-        - connection_string
-
-  elasticache-redis:
+        - cluster_endpoint
+        - vpc_id
+  
+  peering: 
     kind: blueprint
     spec:
       source: 
@@ -46,95 +59,96 @@ grains:
       agent:
         name: demo-dev
         service-account: torque-dev-sa
-      inputs:
-        - cluster_size: 1
+      inputs: 
+        - peer_vpc_id: '{{ .grains.elasticache-complete.outputs.vpc_id }}'
+        - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'
       outputs:
         - cluster_endpoint
   
-  namespace:
-    kind: helm
-    depends-on: rds-postgresql, elasticache-redis
-    spec:
-      source:
-        store: microservices-boutique-demo
-        path: helm/namespace
+  # namespace:
+  #   kind: helm
+  #   depends-on: rds-postgresql, elasticache-redis
+  #   spec:
+  #     source:
+  #       store: microservices-boutique-demo
+  #       path: helm/namespace
      
-      ##namespace: '{{ .inputs.namespace }}'
-      agent:
-      # The Torque agent that will be used to provision the environment.
-        name: demo-dev
-        service-account: torque-dev-sa
-      inputs:
-      - namespace: '{{ .inputs.namespace }}'
-      # Helm commands to run before installing the chart
-      commands:
-      - dep up helm/namespace
+  #     ##namespace: '{{ .inputs.namespace }}'
+  #     agent:
+  #     # The Torque agent that will be used to provision the environment.
+  #       name: demo-dev
+  #       service-account: torque-dev-sa
+  #     inputs:
+  #     - namespace: '{{ .inputs.namespace }}'
+  #     # Helm commands to run before installing the chart
+  #     commands:
+  #     - dep up helm/namespace
 
-  tools:
-    kind: helm
-    depends-on: namespace
-    spec:
-      source:
-        store: microservices-boutique-demo
-        path: helm/tools
-      namespace: '{{ .inputs.namespace }}'
-      agent:
-      # The Torque agent that will be used to provision the environment.
-        name: demo-dev
-        service-account: torque-dev-sa
-        # A service account annotated with a role ARN with permissions to run the asset
-        # service-account: <service-account-name>
-      inputs: []
-      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
-      # env-vars:
-      # - VAR_NAME: var value
-      env-vars: []
-      # Helm commands to run before installing the chart
-      commands:
-      - dep up helm/tools
+  # tools:
+  #   kind: helm
+  #   depends-on: namespace
+  #   spec:
+  #     source:
+  #       store: microservices-boutique-demo
+  #       path: helm/tools
+  #     namespace: '{{ .inputs.namespace }}'
+  #     agent:
+  #     # The Torque agent that will be used to provision the environment.
+  #       name: demo-dev
+  #       service-account: torque-dev-sa
+  #       # A service account annotated with a role ARN with permissions to run the asset
+  #       # service-account: <service-account-name>
+  #     inputs: []
+  #     # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+  #     # env-vars:
+  #     # - VAR_NAME: var value
+  #     env-vars: []
+  #     # Helm commands to run before installing the chart
+  #     commands:
+  #     - dep up helm/tools
 
-  services:
-    kind: helm
-    depends-on: tools
-    spec:
-      source:
-        store: microservices-boutique-demo
-        path: helm/services
-      namespace: '{{ .inputs.namespace }}'
-      agent:
-      # The Torque agent that will be used to provision the environment.
-        name: demo-dev
-        service-account: torque-dev-sa
-        # A service account annotated with a role ARN with permissions to run the asset
-        # service-account: <service-account-name>
-      inputs: []
-      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
-      # env-vars:
-      # - VAR_NAME: var value
-      env-vars: []
-      # Helm commands to run before installing the chart
-      commands:
-      - dep up helm/services
-      scripts:
-        post-helm-install:
-          source:
-            store: assets
-            path: scripts/get-external-frontend-extended.sh
-          outputs:
-            - frontend
+  # services:
+  #   kind: helm
+  #   depends-on: tools
+  #   spec:
+  #     source:
+  #       store: microservices-boutique-demo
+  #       path: helm/services
+  #     namespace: '{{ .inputs.namespace }}'
+  #     agent:
+  #     # The Torque agent that will be used to provision the environment.
+  #       name: demo-dev
+  #       service-account: torque-dev-sa
+  #       # A service account annotated with a role ARN with permissions to run the asset
+  #       # service-account: <service-account-name>
+  #     inputs: []
+  #     # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+  #     # env-vars:
+  #     # - VAR_NAME: var value
+  #     env-vars: []
+  #     # Helm commands to run before installing the chart
+  #     commands:
+  #     - dep up helm/services
+  #     scripts:
+  #       post-helm-install:
+  #         source:
+  #           store: assets
+  #           path: scripts/get-external-frontend-extended.sh
+  #         outputs:
+  #           - frontend
   
-  health-check:
-    kind: shell
-    depends-on: services
-    spec:
-      agent:
-      # The Torque agent that will be used to provision the environment.
-        name: demo-dev
-        service-account: torque-dev-sa
-      env-vars:
-      - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
-      activities:
-        deploy:
-          commands:
-            - "apt-get -y install curl"
-            - "curl https://gist.githubusercontent.com/TomerAdmon/d8b23b7c0d67b396c4a352a2e0981612/raw/244548d7aa1544b342feeb52e8aae788d05ec171/wait_for_website.sh | /bin/bash"
+  # health-check:
+  #   kind: shell
+  #   depends-on: services
+  #   spec:
+  #     agent:
+  #     # The Torque agent that will be used to provision the environment.
+  #       name: demo-dev
+  #       service-account: torque-dev-sa
+  #     env-vars:
+  #     - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
+  #     activities:
+  #       deploy:
+  #         commands:
+  #           - "apt-get -y install curl"
+  #           - "curl https://gist.githubusercontent.com/TomerAdmon/d8b23b7c0d67b396c4a352a2e0981612/raw/244548d7aa1544b342feeb52e8aae788d05ec171/wait_for_website.sh | /bin/bash"

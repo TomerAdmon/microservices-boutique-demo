@@ -1,0 +1,49 @@
+spec_version: 2
+description: Auto generated blueprint for terraform module peering
+# blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
+inputs:
+  original_vpc_id:
+    type: string
+    default: vpc-0b00f9158084c620b
+    description: EKS existing VPC
+  peer_vpc_id:
+    type: string
+  region:
+    type: string
+    default: us-east-1
+    description: AWS region
+  vpc_peering_name:
+    type: string
+    default: my-new-peering
+  agent:
+    type: agent
+# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
+outputs:
+  aws_vpc_peering_connection:
+    value: '{{ .grains.peering.outputs.aws_vpc_peering_connection }}'
+
+grains:
+  peering:
+    kind: terraform
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: terraform/peering
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: '{{ .inputs.agent }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs:
+      - original_vpc_id: '{{ .inputs.original_vpc_id }}'
+      - peer_vpc_id: '{{ .inputs.peer_vpc_id }}'
+      - region: '{{ .inputs.region }}'
+      - vpc_peering_name: '{{ .inputs.vpc_peering_name }}'
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      outputs:
+      - aws_vpc_peering_connection
+    # The terraform version that will be used to deploy the module
+    tf-version: 1.5.5

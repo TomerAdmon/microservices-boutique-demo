@@ -1,7 +1,6 @@
 spec_version: 2
 description: network best practice for aws based applications
 
-
 outputs:
   private_subnet_ids:
     value: '{{ .grains.network.outputs.private_subnet_ids }}'
@@ -13,6 +12,7 @@ outputs:
     value: '{{ .grains.network.outputs.vpc_id }}'
   vpc_default_security_group_id:
     value: '{{ .grains.network.outputs.vpc_default_security_group_id }}'
+
 grains:
   network:
     kind: terraform
