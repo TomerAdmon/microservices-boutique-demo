@@ -2,29 +2,6 @@ provider "aws" {
   region = var.region
 }
 
-module "vpc" {
-  source  = "cloudposse/vpc/aws"
-  version = "2.1.0"
-
-  ipv4_primary_cidr_block = "172.16.0.0/16"
-
-  context = module.this.context
-}
-
-module "subnets" {
-  source  = "cloudposse/dynamic-subnets/aws"
-  version = "2.3.0"
-
-  availability_zones   = var.availability_zones
-  vpc_id               = module.vpc.vpc_id
-  igw_id               = [module.vpc.igw_id]
-  ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
-  nat_gateway_enabled  = true
-  nat_instance_enabled = false
-
-  context = module.this.context
-}
-
 # Create a zone in order to validate fix for https://github.com/cloudposse/terraform-aws-elasticache-redis/issues/82
 resource "aws_route53_zone" "private" {
   name = format("elasticache-redis-terratest-%s.testing.cloudposse.co", try(module.this.attributes[0], "default"))
@@ -49,7 +26,7 @@ module "redis" {
   zone_id                          = [aws_route53_zone.private.id]
   vpc_id                           = module.vpc.vpc_id
   allowed_security_groups          = [module.vpc.vpc_default_security_group_id]
-  subnets                          = module.subnets.public_subnet_ids
+  subnets                          = module.subnets.private_subnet_ids
   cluster_size                     = var.cluster_size
   instance_type                    = var.instance_type
   apply_immediately                = true
