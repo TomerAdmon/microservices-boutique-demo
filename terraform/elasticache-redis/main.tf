@@ -26,7 +26,7 @@ module "redis" {
   zone_id                          = [aws_route53_zone.private.id]
   vpc_id                           = var.vpc_id
   allowed_security_groups          = [var.vpc_default_security_group_id]
-  subnets                          = [var.private_subnet_ids]
+  subnets                          = var.private_subnet_ids
   cluster_size                     = var.cluster_size
   instance_type                    = var.instance_type
   apply_immediately                = true
