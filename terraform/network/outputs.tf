@@ -1,9 +1,9 @@
-output "public_subnet_cidrs" {
+output "public_subnet_ids" {
   value       = module.subnets.public_subnet_ids
   description = "Public subnet IDs"
 }
 
-output "private_subnet_cidrs" {
+output "private_subnet_ids" {
   value       = module.subnets.private_subnet_ids
   description = "Private subnet IDs"
 }
