@@ -4,14 +4,14 @@ variable "region" {
 }
 
 
-variable "public_subnet_cidrs" {
+variable "private_subnet_ids" {
   type        = string
-  description = "Public subnet CIDRs"
+  description = "Public subnet IDs"
 }
 
-variable "private_subnet_cidrs" {
+variable "private_subnet_ids" {
   type        = string
-  description = "Private subnet CIDRs"
+  description = "Private subnet IDs"
 }
 
 variable "vpc_cidr" {

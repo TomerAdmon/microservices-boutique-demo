@@ -1,11 +1,11 @@
 output "public_subnet_cidrs" {
-  value       = module.subnets.public_subnet_cidrs
-  description = "Public subnet CIDRs"
+  value       = module.subnets.public_subnet_ids
+  description = "Public subnet IDs"
 }
 
 output "private_subnet_cidrs" {
-  value       = module.subnets.private_subnet_cidrs
-  description = "Private subnet CIDRs"
+  value       = module.subnets.private_subnet_ids
+  description = "Private subnet IDs"
 }
 
 output "vpc_cidr" {

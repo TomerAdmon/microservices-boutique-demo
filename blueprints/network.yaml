@@ -4,9 +4,9 @@ description: network best practice for aws based applications
 
 outputs:
   private_subnet_cidrs:
-    value: '{{ .grains.network.outputs.private_subnet_cidrs }}'
+    value: '{{ .grains.network.outputs.private_subnet_ids }}'
   public_subnet_cidrs:
-    value: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+    value: '{{ .grains.network.outputs.public_subnet_ids }}'
   vpc_cidr:
     value: '{{ .grains.network.outputs.vpc_cidr }}'
   vpc_id:
@@ -31,8 +31,8 @@ grains:
       - region: us-east-1
       env-vars: []
       outputs:
-      - private_subnet_cidrs
-      - public_subnet_cidrs
+      - private_subnet_ids
+      - public_subnet_ids
       - vpc_cidr
       - vpc_id
       - vpc_default_security_group_id

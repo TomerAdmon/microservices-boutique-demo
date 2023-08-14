@@ -16,8 +16,8 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       outputs:
-      - private_subnet_cidrs
-      - public_subnet_cidrs
+      - private_subnet_ids
+      - public_subnet_ids
       - vpc_cidr
       - vpc_id
       - vpc_default_security_group_id
@@ -34,10 +34,10 @@ grains:
         service-account: torque-dev-sa
       inputs:
       - cluster_size: 1
-      - public_subnet_cidrs: '{{ .grains.network.outputs.public_subnet_cidrs }}'
-      - private_subnet_cidrs: '{{ .grains.network.outputs.public_subnet_cidrs }}'
-      - vpc_cidr: '{{ .grains.network.outputs.public_subnet_cidrs }}'
-      - vpc_id: '{{ .grains.network.outputs.public_subnet_cidrs }}'
-      - vpc_default_security_group_id: '{{ .grains.network.outputs.public_subnet_cidrs }}'
+      - public_subnet_ids: '{{ .grains.network.outputs.public_subnet_ids }}'
+      - private_subnet_ids: '{{ .grains.network.outputs.private_subnet_ids }}'
+      - vpc_cidr: '{{ .grains.network.outputs.vpc_cidr }}'
+      - vpc_id: '{{ .grains.network.outputs.vpc_id }}'
+      - vpc_default_security_group_id: '{{ .grains.network.outputs.vpc_default_security_group_id }}'
       outputs:
         - cluster_endpoint
