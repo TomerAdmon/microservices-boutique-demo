@@ -6,9 +6,9 @@ inputs:
     type: string
     default: 1
     description: Number of nodes in cluster
-  public_subnet_cidrs:
+  public_subnet_ids:
     type: string
-  private_subnet_cidrs:
+  private_subnet_ids:
     type: string
   vpc_cidr:
     type: string
@@ -53,8 +53,8 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
-      - public_subnet_cidrs: '{{ .inputs.public_subnet_cidrs }}'
-      - private_subnet_cidrs: '{{ .inputs.private_subnet_cidrs }}'
+      - public_subnet_ids: '{{ .inputs.public_subnet_ids }}'
+      - private_subnet_ids: '{{ .inputs.private_subnet_ids }}'
       - vpc_cidr: '{{ .inputs.vpc_cidr }}'
       - vpc_id: '{{ .inputs.vpc_id }}' 
       - vpc_default_security_group_id: '{{ .inputs.vpc_default_security_group_id }}'
