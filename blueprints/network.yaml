@@ -27,7 +27,7 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs:
-      - availability_zones: '["us-east-1a", "us-east-1b"]'
+      - availability_zones: '["us-east-1a", "us-east-1b", "us-east-1c"]'
       - region: us-east-1
       env-vars: []
       outputs:
