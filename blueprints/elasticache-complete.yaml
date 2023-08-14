@@ -3,7 +3,7 @@ description: Auto generated blueprint for terraform module terraform-aws-elastic
 
 outputs:
   cluster_endpoint:
-    value: '{{ .grains.elasticache-redis.outputs.cluster_endpoint }}'
+    value: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
   vpc_id:
     value: '{{ .grains.network.outputs.vpc_id }}'
 
@@ -24,7 +24,7 @@ grains:
       - vpc_id
       - vpc_default_security_group_id
 
-  elasticache-redis:
+  elasticache-simple:
     kind: blueprint
     depends-on: network
     spec:
