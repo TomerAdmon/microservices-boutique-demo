@@ -4,7 +4,7 @@ variable "region" {
 }
 
 
-variable "private_subnet_ids" {
+variable "public_subnet_ids" {
   type        = string
   description = "Public subnet IDs"
 }
