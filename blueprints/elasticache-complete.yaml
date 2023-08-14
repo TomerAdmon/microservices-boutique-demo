@@ -5,10 +5,10 @@ outputs:
   cluster_endpoint:
     value: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
   vpc_id:
-    value: '{{ .grains.network.outputs.vpc_id }}'
+    value: '{{ .grains.base-network.outputs.vpc_id }}'
 
 grains:
-  network:
+  base-network:
     kind: blueprint
     spec:
       source: 
@@ -26,7 +26,7 @@ grains:
 
   elasticache-simple:
     kind: blueprint
-    depends-on: network
+    depends-on: base-network
     spec:
       source: 
         store: microservices-boutique-demo
