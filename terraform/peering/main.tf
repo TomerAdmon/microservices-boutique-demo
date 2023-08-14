@@ -15,7 +15,7 @@ provider "aws" {
 ## eksctl-eks-dev-cluster/VPC
 
 data "aws_vpc" "selected" {
-  id = var.original_vpc_id
+  id = var.peer_vpc_id
 }
 
 ## rtb-00993454e6733ccf2
@@ -31,7 +31,7 @@ resource "aws_vpc_peering_connection" "vpc_to_vpc" {
 }
 
 data "aws_route_tables" "rts" {
-  vpc_id = var.peer_vpc_id
+  vpc_id = var.original_vpc_id
 }
 
 resource "aws_route" "peering_routes" {
