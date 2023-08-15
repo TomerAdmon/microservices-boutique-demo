@@ -1,6 +1,13 @@
 spec_version: 2
 description: Online Boutique production-like deployment for AWS
-   
+
+outputs:
+  cluster_endpoint: 
+      value: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
+  website-url: 
+      value: '{{ .grains.app-deployment.outputs.frontend }}'
+      quick: true
+
 grains:
   base-network:
     kind: blueprint
