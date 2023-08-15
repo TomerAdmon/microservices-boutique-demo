@@ -25,6 +25,19 @@ grains:
       - vpc_id
       - vpc_default_security_group_id
 
+  rds-postgresql:
+    kind: blueprint
+    depends-on: base-network
+    spec:
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      outputs:
+        - connection_string
+
   elasticache-simple:
     kind: blueprint
     depends-on: base-network
