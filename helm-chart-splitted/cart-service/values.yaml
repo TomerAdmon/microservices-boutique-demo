@@ -36,7 +36,7 @@ cartService:
   name: cartservice
   resources:
     requests:
-      cpu: 200m
+      cpu: 300m
       memory: 64Mi
     limits:
       cpu: 300m
