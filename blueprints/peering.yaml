@@ -15,9 +15,8 @@ inputs:
   vpc_peering_name:
     type: string
     default: my-new-peering
-  agent:
-    type: agent
-# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
+#   agent:
+#     type: agent
 outputs:
   aws_vpc_peering_connection:
     value: '{{ .grains.peering.outputs.aws_vpc_peering_connection }}'
@@ -30,10 +29,8 @@ grains:
         store: microservices-boutique-demo
         path: terraform/peering
       agent:
-      # The Torque agent that will be used to provision the environment.
-        name: '{{ .inputs.agent }}'
-        # A service account annotated with a role ARN with permissions to run the asset
-        # service-account: <service-account-name>
+        name: demo-dev
+        service-account: torque-dev-sa
       inputs:
       - original_vpc_id: '{{ .inputs.original_vpc_id }}'
       - peer_vpc_id: '{{ .inputs.peer_vpc_id }}'
