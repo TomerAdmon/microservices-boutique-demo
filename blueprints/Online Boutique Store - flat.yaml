@@ -49,7 +49,7 @@ grains:
         name: demo-dev
         service-account: torque-dev-sa
       inputs: 
-        - peer_vpc_id: '{{ .grains.base-network.outputs.vpc_id }}'
-        - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'
+      - peer_vpc_id: '{{ .grains.base-network.outputs.vpc_id }}'
+      - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'
       outputs:
-        - cluster_endpoint
+      - cluster_endpoint
