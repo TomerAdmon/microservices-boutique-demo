@@ -52,4 +52,19 @@ grains:
       - peer_vpc_id: '{{ .grains.base-network.outputs.vpc_id }}'
       - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'
       outputs:
-      - cluster_endpoint
+      - aws_vpc_peering_connection
+
+  app-deployment: 
+    kind: blueprint
+    depends-on: elasticache-simple, peering
+    spec:
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      inputs: 
+      - connectionString: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
+      outputs:
+      - frontend

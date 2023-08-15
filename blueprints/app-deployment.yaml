@@ -1,0 +1,69 @@
+
+spec_version: 2
+description: Online Boutique production-like deployment for AWS
+
+inputs:
+  cluster_endpoint:
+    type: string
+
+# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
+outputs:
+  frontend:
+    value: 'http://{{ .grains.cart-service.scripts.post-helm-install.outputs.frontend}}'
+    kind: link
+
+grains:
+  services:
+    kind: helm
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm-chart-splitted/services
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm-chart-splitted/services
+
+  cart-service:
+    kind: helm
+    spec:
+      source:
+        store: microservices-boutique-demo
+        path: helm-chart-splitted/cart-service
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs:
+      - connectionString: '{{ .inputs.cluster_endpoint }}'
+      # Helm commands to run before installing the chart
+      commands:
+      - dep up helm-chart-splitted/cart-service
+      scripts:
+        post-helm-install:
+          source:
+            store: assets
+            path: scripts/get-external-frontend-extended.sh
+          outputs:
+            - frontend
+  
+  health-check:
+    kind: shell
+    depends-on: cart-service, services
+    spec:
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: demo-dev
+        service-account: torque-dev-sa
+      env-vars:
+      - FRONTEND_URL: 'http://{{ .grains.cart-service.scripts.post-helm-install.outputs.frontend }}'
+      activities:
+        deploy:
+          commands:
+            - "apt-get -y install curl"
+            - "curl https://gist.githubusercontent.com/TomerAdmon/d8b23b7c0d67b396c4a352a2e0981612/raw/244548d7aa1544b342feeb52e8aae788d05ec171/wait_for_website.sh | /bin/bash"
