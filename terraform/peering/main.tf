@@ -18,6 +18,10 @@ data "aws_vpc" "selected" {
   id = var.peer_vpc_id
 }
 
+data "aws_vpc" "original" {
+  id = var.original_vpc_id
+}
+
 ## rtb-00993454e6733ccf2
 ## eksctl-eks-dev-cluster/PublicRouteTable
 
@@ -28,16 +32,37 @@ resource "aws_vpc_peering_connection" "vpc_to_vpc" {
     tags = {
     Name = var.vpc_peering_name
   }
+
+  requester {
+    allow_remote_vpc_dns_resolution = true
+  }
+
+  accepter {
+    allow_remote_vpc_dns_resolution = true
+  }
+
 }
 
-data "aws_route_tables" "rts" {
+data "aws_route_tables" "rts_original" {
   vpc_id = var.original_vpc_id
 }
 
-resource "aws_route" "peering_routes" {
-  count                     = length(data.aws_route_tables.rts.ids)
-  route_table_id            = tolist(data.aws_route_tables.rts.ids)[count.index]
+data "aws_route_tables" "rts_new" {
+  vpc_id = var.peer_vpc_id
+}
+
+#requester
+resource "aws_route" "peering_routes1" {
+  count                     = length(data.aws_route_tables.rts_original.ids)
+  route_table_id            = tolist(data.aws_route_tables.rts_original.ids)[count.index]
   destination_cidr_block    = data.aws_vpc.selected.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.vpc_to_vpc.id
 }
 
+#accepter
+resource "aws_route" "peering_routes2" {
+  count                     = length(data.aws_route_tables.rts_new.ids)
+  route_table_id            = tolist(data.aws_route_tables.rts_new.ids)[count.index]
+  destination_cidr_block    = data.aws_vpc.original.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_to_vpc.id
+}
