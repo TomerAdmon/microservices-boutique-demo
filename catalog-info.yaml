@@ -33,9 +33,20 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: retail-redis-cache
+  name: retail-cache
+  description: Stores all accounts details and users transactions
+spec:
+  type: cache
+  owner: retail-team
+  system: torque
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: retail-db
   description: Stores all accounts details and users transactions
 spec:
   type: database
   owner: retail-team
   system: torque
+
