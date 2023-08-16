@@ -39,14 +39,22 @@ resource "aws_route_table_association" "this" {
 }
 
 resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
-  description = "Allow SSH inbound traffic"
+  name        = "allow_ssh_http"
+  description = "Allow SSH and HTTP inbound traffic"
   vpc_id      = aws_vpc.this.id
 
   ingress {
     description = "SSH from web"
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    description = "HTTP from web"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -90,13 +98,13 @@ resource "aws_instance" "this" {
   user_data       = templatefile("${path.module}/ssh-authentication.tftpl", {"password" = random_password.password[0].result})
 }
 
-data "aws_instance" "this_running" {
-  filter {
-    name =  "instance-state-name"
-    values = ["running"]
-  }
+# data "aws_instance" "this_running" {
+#   filter {
+#     name =  "instance-state-name"
+#     values = ["running"]
+#   }
 
-  instance_id = aws_instance.this.id
+#   instance_id = aws_instance.this.id
 
-  depends_on = [aws_instance.this]
-}
+#   depends_on = [aws_instance.this]
+# }

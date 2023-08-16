@@ -1,10 +1,6 @@
 spec_version: 2
 description: Launch a testing workstation
 
-inputs:
-  agent:
-    type: agent
-
 grains:
   create-ec2:
     kind: terraform
@@ -13,7 +9,8 @@ grains:
         path: terraform/create-ec2-instance
         store: microservices-boutique-demo
       agent:
-        name: '{{.inputs.agent}}'
+        name: demo-dev
+        service-account: torque-dev-sa
       env-vars:
         - TF_LOG: debug
       outputs:
@@ -28,7 +25,8 @@ grains:
         store: microservices-boutique-demo
         path: ansible/install_nginx_on_ec2.yaml
       agent:
-        name: '{{ .inputs.agent }}'
+        name: demo-dev
+        service-account: torque-dev-sa
       inventory-file:
         all:
           hosts:
