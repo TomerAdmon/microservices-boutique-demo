@@ -15,7 +15,8 @@ spec:
   lifecycle: production
   system: torque
   dependsOn:
-    - resource:default/retail-redis-cache
+    - resource:default/retail-cache
+    - resource:default/retail-db
   providesApis:
     - online-boutique-apis
 ---
