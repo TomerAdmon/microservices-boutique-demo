@@ -1,0 +1,28 @@
+---
+- name: Configure EC2 Instance
+  hosts: all
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Wait for system to become reachable
+      wait_for_connection:
+        delay: 60
+        timeout: 300
+
+    - name: Gather facts for the first time
+      setup:
+    
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
