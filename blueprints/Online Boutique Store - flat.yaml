@@ -5,7 +5,7 @@ instructions:
   source:
     store: microservices-boutique-demo
     path: instructions/OBS.md
-    
+
 outputs:
   cluster_endpoint: 
       value: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
@@ -96,6 +96,7 @@ grains:
 
   test-workstation: 
     kind: blueprint
+    depends-on: peering
     spec:
       source: 
         store: microservices-boutique-demo
