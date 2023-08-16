@@ -17,7 +17,7 @@ grains:
         - public_ip
         - password
         
-  install-nginx:
+  configure-workstation:
     kind: ansible
     depends-on: create-ec2
     spec: 
