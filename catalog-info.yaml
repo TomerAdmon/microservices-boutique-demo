@@ -29,3 +29,13 @@ spec:
   owner: retail-team
   definition:
     $text: https://github.com/QualiNext/test-spec2-public/blob/master/test.yaml
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: retail-redis-cache
+  description: Stores all accounts details and users transactions
+spec:
+  type: database
+  owner: retail-team
+  system: torque
