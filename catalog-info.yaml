@@ -1,0 +1,31 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: online-boutique
+  description: online-boutique microservice
+  annotations:
+    "torque.io/space": "11-Online-Boutique"
+    "torque.io/lifecycle": "activity_type"
+    "jenkins.io/job-full-name": "folder-name/job-name"
+  tags:
+    - retail
+spec:
+  type: service
+  owner: retail-team
+  lifecycle: production
+  system: torque
+  dependsOn:
+    - resource:default/retail-redis-cache
+  providesApis:
+    - online-boutique-apis
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: online-boutique-apis
+spec:
+  type: openapi
+  lifecycle: production
+  owner: retail-team
+  definition:
+    $text: https://github.com/QualiNext/test-spec2-public/blob/master/test.yaml
