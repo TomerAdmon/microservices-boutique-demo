@@ -11,7 +11,7 @@ grains:
     spec:
       source:
         path: terraform/create-ec2-instance
-        store: test-spec2-public
+        store: microservices-boutique-demo
       agent:
         name: '{{.inputs.agent}}'
       env-vars:
@@ -25,7 +25,7 @@ grains:
     depends-on: create-ec2
     spec: 
       source:
-        store: test-spec2-public
+        store: microservices-boutique-demo
         path: ansible/install_nginx_on_ec2.yaml
       agent:
         name: '{{ .inputs.agent }}'
