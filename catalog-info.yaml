@@ -14,7 +14,7 @@ metadata:
   name: cart
   description: cart microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -37,7 +37,7 @@ metadata:
   name: frontend
   description: frontend microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -59,7 +59,7 @@ metadata:
   name: product-catalog
   description: product-catalog microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -81,7 +81,7 @@ metadata:
   name: currency
   description: currency microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -103,7 +103,7 @@ metadata:
   name: payment
   description: payment microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -125,7 +125,7 @@ metadata:
   name: shipping
   description: shipping microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -147,7 +147,7 @@ metadata:
   name: email
   description: email microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -169,7 +169,7 @@ metadata:
   name: checkout
   description: checkout microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -191,7 +191,7 @@ metadata:
   name: recommendation
   description: recommendation microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -213,7 +213,7 @@ metadata:
   name: ads
   description: ads microservice
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
@@ -235,7 +235,7 @@ metadata:
   name: load-generator
   description: load-generator tool
   annotations:
-    "torque.io/space": "11-Online-Boutique"
+    "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
