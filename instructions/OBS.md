@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" width="300" alt="Online Boutique" />
+<img src="https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" style="background-color: #272a2e;" width="300" alt="Online Boutique" />
 </p>
 
 ### Online Boutique is a cloud-first microservices demo application. Online Boutique consists of an 11-tier microservices application. The application is a web-based e-commerce app where users can browse items, add them to the cart, and purchase them.
