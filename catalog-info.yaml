@@ -278,6 +278,10 @@ kind: Resource
 metadata:
   name: retail-db
   description: Stores all accounts details and users transactions
+  links:
+    - url: https://dashboard.example.com
+      title: 'connection string'
+      icon: dashboard
 spec:
   type: database
   owner: retail-team
