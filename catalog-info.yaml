@@ -282,9 +282,6 @@ metadata:
     - url: https://dashboard.example.com
       title: 'connection string'
       icon: dashboard
-    - url: https://dashboard.example.com
-      title: 'https://dashboard.example.com/?xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=y'
-      icon: dashboard
 spec:
   type: database
   owner: retail-team
