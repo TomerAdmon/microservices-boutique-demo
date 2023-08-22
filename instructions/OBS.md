@@ -7,7 +7,10 @@
 
 Google uses this application to demonstrate the use of technologies like Kubernetes, GKE, Istio, Stackdriver, and gRPC. This application works on any Kubernetes cluster, like Google Kubernetes Engine (GKE). It’s easy to deploy with little to no configuration.
 
-## Architecture
+## Infrastructure Architecture 
+[![Architecture of infrastructure](https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/instructions/1aws.png)
+
+## Application Architecture 
 
 **Online Boutique** is composed of 11 microservices written in different
 languages that talk to each other over gRPC.
