@@ -1,0 +1,58 @@
+spec_version: 2
+description: Raftt Demo (online-boutique)
+
+inputs:
+  namespace:
+    type: string
+
+outputs:
+  URL:
+    value: 'http://{{.grains.helm.scripts.post-helm-install.outputs.frontend}}'
+    kind: link
+
+grains:
+  namespace:
+    kind: helm
+    spec:
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      scripts:
+        post-helm-install:
+          source:
+            store: online-boutique
+            path:  misc/scripts/set-namespace-permissions.sh
+          arguments: '{{ .inputs.namespace }}'
+          outputs:
+            - frontend
+      inputs:
+        - namespace_name: '{{ .inputs.namespace }}'
+      env-vars: []
+      commands:
+        - dep up misc/k8s/namespace
+  helm:
+    kind: helm
+    depends-on: namespace
+    spec:
+      namespace: '{{ .inputs.namespace }}'
+      source: 
+        store: microservices-boutique-demo
+        path: blueprints
+      agent:
+        name: demo-dev
+        service-account: torque-dev-sa
+      scripts:
+        post-helm-install:
+          source:
+            store: online-boutique
+            path:  misc/scripts/get-online-boutique-address.sh
+          arguments: '{{ .inputs.namespace }}'
+          outputs:
+            - frontend
+      inputs:
+        - Namespace: '{{ .inputs.namespace }}'
+        - frontend.ingress.domain: 'azure-demo.raftt.io'
+      env-vars: []
