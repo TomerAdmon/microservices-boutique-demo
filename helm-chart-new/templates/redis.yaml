@@ -1,0 +1,61 @@
+{{- if .Values.cartDatabase.inClusterRedis.create }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.cartDatabase.inClusterRedis.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.cartDatabase.inClusterRedis.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.cartDatabase.inClusterRedis.name }}
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: redis
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+        image: raftt/onlineboutique-redis
+        ports:
+        - containerPort: 6379
+        readinessProbe:
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data
+        resources:
+          requests:
+            cpu: 70m
+            memory: 200Mi
+      volumes:
+      - name: redis-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.cartDatabase.inClusterRedis.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.cartDatabase.inClusterRedis.name }}
+  ports:
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379
+{{- end }}

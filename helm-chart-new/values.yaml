@@ -1,0 +1,72 @@
+# Default values for onlineboutique.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Namespace: torque-sandboxes
+
+opentelemetryCollector:
+  create: false
+  name: opentelemetrycollector
+  # Specifies the project id for the otel collector. If set as "PROJECT_ID" (default value), an initContainer will automatically retrieve the project id value from the metadata server.
+  projectId: "PROJECT_ID"
+
+adService:
+  create: true
+  name: ads
+
+cartService:
+  create: true
+  name: cart
+
+checkoutService:
+  create: true
+  name: checkout
+
+currencyService:
+  create: true
+  name: currency
+
+emailService:
+  create: true
+  name: email
+
+frontend:
+  create: true
+  name: frontend
+  externalService: false
+  ingress:
+    create: true
+    domain: demo.raftt.io
+  cymbalBranding: false
+  singleSharedSession: false
+
+loadGenerator:
+  create: false
+  name: loadgenerator
+  checkFrontendInitContainer: true
+
+paymentService:
+  create: true
+  name: payments
+
+productCatalogService:
+  create: true
+  name: productcatalog
+  # Specifies an extra latency to any request on productcatalogservice, by default no extra latency.
+  extraLatency: ""
+
+recommendationService:
+  create: true
+  name: recommendations
+
+shippingService:
+  create: true
+  name: shipping
+
+cartDatabase:
+  # Specifies the type of the cartservice's database, could be either redis or spanner.
+  type: redis
+  connectionString: "redis-cart:6379"
+  inClusterRedis:
+    create: true
+    name: redis-cart

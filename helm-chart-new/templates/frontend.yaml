@@ -1,0 +1,111 @@
+{{- if .Values.frontend.create }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.frontend.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.name }}
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: server
+          image: raftt/onlineboutique-frontend
+          ports:
+          - containerPort: 8080
+          readinessProbe:
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            httpGet:
+              path: "/_healthz"
+              port: 8080
+              httpHeaders:
+              - name: "Cookie"
+                value: "shop_session-id=x-readiness-probe"
+          env:
+          - name: PORT
+            value: "8080"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "{{ .Values.productCatalogService.name }}:3550"
+          - name: CURRENCY_SERVICE_ADDR
+            value: "{{ .Values.currencyService.name }}:7000"
+          - name: CART_SERVICE_ADDR
+            value: "{{ .Values.cartService.name }}:7070"
+          - name: RECOMMENDATION_SERVICE_ADDR
+            value: "{{ .Values.recommendationService.name }}:8080"
+          - name: SHIPPING_SERVICE_ADDR
+            value: "{{ .Values.shippingService.name }}:50051"
+          - name: CHECKOUT_SERVICE_ADDR
+            value: "{{ .Values.checkoutService.name }}:5050"
+          - name: AD_SERVICE_ADDR
+            value: "{{ .Values.adService.name }}:9555"
+          {{- if .Values.opentelemetryCollector.create }}
+          - name: COLLECTOR_SERVICE_ADDR
+            value: "{{ .Values.opentelemetryCollector.name }}:4317"
+          {{- end }}
+          - name: CYMBAL_BRANDING
+            value: {{ .Values.frontend.cymbalBranding | quote }}
+          - name: ENABLE_SINGLE_SHARED_SESSION
+            value: {{ .Values.frontend.singleSharedSession | quote }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.frontend.name }}
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+{{- if .Values.frontend.externalService }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.frontend.name }}-external
+  namespace: {{ .Values.Namespace }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Values.frontend.name }}
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+{{- end }}
+{{- if .Values.frontend.ingress.create }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.Namespace }}.{{ .Values.frontend.ingress.domain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Values.frontend.name }}
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+{{- end }}
+{{- end }}

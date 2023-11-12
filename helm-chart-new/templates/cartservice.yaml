@@ -1,0 +1,53 @@
+{{- if .Values.cartService.create }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.cartService.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.cartService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.cartService.name }}
+    spec:
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: server
+        image: raftt/onlineboutique-cart:latest
+        ports:
+        - containerPort: 7070
+        env:
+        {{- if eq .Values.cartDatabase.type "spanner" }}
+        - name: SPANNER_CONNECTION_STRING
+        {{- else }}
+        - name: REDIS_ADDR
+        {{- end }}
+          value: {{ .Values.cartDatabase.connectionString | quote }}
+        resources:
+          requests:
+            cpu: 200m
+            memory: 64Mi
+        readinessProbe:
+          initialDelaySeconds: 1
+          periodSeconds: 1
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.cartService.name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.cartService.name }}
+  ports:
+  - name: grpc
+    port: 7070
+    targetPort: 7070
+{{- end }}
