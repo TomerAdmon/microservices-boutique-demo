@@ -213,7 +213,7 @@ metadata:
   name: ads
   description: ads microservice
   annotations:
-    "torque.io/space": "01-Development"
+    "torque.io/space": "03-Live"
     "torque.io/lifecycle": "activity_type"
     "jenkins.io/job-full-name": "folder-name/job-name"
   tags:
