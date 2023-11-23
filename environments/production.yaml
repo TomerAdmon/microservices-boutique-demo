@@ -1,7 +1,7 @@
 kind: environment                               
 environment_name: "Workstation Production - TomerA"
 description: "EC2 workstation for production workloads"
-state: inactive
+state: active
 owner_email: tomer.a@quali.com
 blueprint:                                      
   name: "test-workstation"
