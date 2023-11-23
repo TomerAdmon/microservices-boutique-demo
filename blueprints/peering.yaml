@@ -30,7 +30,7 @@ grains:
     kind: terraform
     spec:
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: terraform/peering
       agent:
         name: '{{ .inputs.agent }}'

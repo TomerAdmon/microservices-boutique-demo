@@ -18,7 +18,7 @@ grains:
     kind: blueprint
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
         name: '{{ .inputs.agent }}'
@@ -35,7 +35,7 @@ grains:
     depends-on: base-network
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
         name: '{{ .inputs.agent }}'

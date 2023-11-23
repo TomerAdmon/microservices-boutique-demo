@@ -19,7 +19,7 @@ grains:
     kind: helm
     spec:
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: helm-chart-splitted/services
       agent:
       # The Torque agent that will be used to provision the environment.
@@ -41,7 +41,7 @@ grains:
     kind: helm
     spec:
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: helm-chart-splitted/cart-service
       agent:
       # The Torque agent that will be used to provision the environment.

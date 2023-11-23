@@ -6,14 +6,14 @@ inputs:
     type: agent
   service-account:
     type: string
-    
+
 grains:
   create-ec2:
     kind: terraform
     spec:
       source:
         path: terraform/create-ec2-instance
-        store: microservices-boutique-demo
+        store: cloud-native-application
       agent:
         name: '{{ .inputs.agent }}'
         service-account: '{{ .inputs.service-account }}'
@@ -28,7 +28,7 @@ grains:
     depends-on: create-ec2
     spec: 
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: ansible/install_nginx_on_ec2.yaml
       agent:
         name: '{{ .inputs.agent }}'

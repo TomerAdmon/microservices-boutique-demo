@@ -26,7 +26,7 @@ grains:
       tags:
         auto-tag: false
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: terraform/network
       agent:
       # The Torque agent that will be used to provision the environment.

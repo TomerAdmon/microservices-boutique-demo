@@ -3,7 +3,7 @@ description: Online Boutique production-like deployment for AWS
 
 instructions:
   source:
-    store: microservices-boutique-demo
+    store: cloud-native-application
     path: instructions/OBS.md
 
 inputs:
@@ -25,7 +25,7 @@ grains:
     kind: blueprint
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
         name: '{{ .inputs.agent }}'
@@ -39,7 +39,7 @@ grains:
     depends-on: elasticache-complete
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
         name: '{{ .inputs.agent }}'

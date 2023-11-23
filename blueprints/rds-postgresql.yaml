@@ -27,7 +27,7 @@ grains:
     kind: terraform
     spec:
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: terraform/rds
       agent:
         name: '{{ .inputs.agent }}'
