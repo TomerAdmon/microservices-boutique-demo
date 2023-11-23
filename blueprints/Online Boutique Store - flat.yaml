@@ -6,6 +6,12 @@ instructions:
     store: microservices-boutique-demo
     path: instructions/OBS.md
 
+inputs:
+  agent:
+    type: agent
+  service-account:
+    type: string
+
 outputs:
   cluster_endpoint: 
       value: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
@@ -21,8 +27,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
       - private_subnet_ids
       - public_subnet_ids
@@ -38,8 +44,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
         - connection_string
 
@@ -51,8 +57,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs:
       - cluster_size: 1
       - public_subnet_ids: '{{ .grains.base-network.outputs.public_subnet_ids }}'
@@ -71,8 +77,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs: 
       - peer_vpc_id: '{{ .grains.base-network.outputs.vpc_id }}'
       - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'
@@ -87,8 +93,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs: 
       - connectionString: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
       outputs:
@@ -102,7 +108,7 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
       - frontend

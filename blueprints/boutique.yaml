@@ -3,9 +3,10 @@ description: Auto generated blueprint for helm chart adservice
 # blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
 
 inputs:
-  host_name:
-    type: execution-host
-    allowed-values: [tomer-dev-machine, demo-dev]
+  agent:
+    type: agent
+  service-account:
+    type: string
     
 outputs:
   Architecture Diagram:
@@ -25,7 +26,7 @@ grains:
       host:
       # Execution Host - the platform where the asset executable will run.
       # For example, a Kubernetes cluster can be used as an execution host.
-        name: '{{ .inputs.host_name }}'
+        name: '{{ .inputs.agent }}'
         # A service account annotated with a role ARN with permissions to run the asset
         # service-account: <service-account-name>
       inputs: []
@@ -47,7 +48,7 @@ grains:
       host:
       # Execution Host - the platform where the asset executable will run.
       # For example, a Kubernetes cluster can be used as an execution host.
-        name: '{{ .inputs.host_name }}'
+        name: '{{ .inputs.agent }}'
         # A service account annotated with a role ARN with permissions to run the asset
         # service-account: <service-account-name>
       inputs: []
@@ -70,7 +71,7 @@ grains:
     depends-on: services
     spec:
       host:
-        name: '{{ .inputs.host_name }}'
+        name: '{{ .inputs.agent }}'
       env-vars:
       - FRONTEND_URL: 'http://{{ grains.services.scripts. post-helm-install.outputs.frontend}}'
       activities:

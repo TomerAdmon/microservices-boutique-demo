@@ -1,6 +1,12 @@
 spec_version: 2
 description: network best practice for aws based applications
 
+inputs:
+  agent:
+    type: agent
+  service-account:
+    type: string
+
 outputs:
   private_subnet_ids:
     value: '{{ .grains.network.outputs.private_subnet_ids }}'
@@ -24,8 +30,8 @@ grains:
         path: terraform/network
       agent:
       # The Torque agent that will be used to provision the environment.
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs:
       - availability_zones: '["us-east-1a", "us-east-1b", "us-east-1c"]'
       - region: us-east-1

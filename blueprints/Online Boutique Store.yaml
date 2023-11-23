@@ -15,6 +15,10 @@ inputs:
   namespace:
     type: string
     default: "app-deployment"
+  agent:
+    type: agent
+  service-account:
+    type: string
     
 grains:
   elasticache-complete:
@@ -24,8 +28,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
         - cluster_endpoint
         - vpc_id
@@ -38,8 +42,8 @@ grains:
         store: microservices-boutique-demo
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs: 
         - peer_vpc_id: '{{ .grains.elasticache-complete.outputs.vpc_id }}'
         - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'

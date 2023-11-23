@@ -7,6 +7,10 @@ inputs:
     default: "small"
     description: "The instance type of the RDS instance. Small, medium, or large."
     allowed-values: ["small", "medium", "large"]
+  agent:
+    type: agent
+  service-account:
+    type: string
 
 
 # values that starts with '{' for liquid template must be encosed with quotes so YAML won't consider them as dict
@@ -26,8 +30,8 @@ grains:
         store: microservices-boutique-demo
         path: terraform/rds
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs:
         - sandbox_id: '{{ sandboxid | downcase }}'
         - size: '{{ .inputs.["DB Size"] }}' 
