@@ -1,0 +1,20 @@
+kind: environment                               
+environment_name: "Workstation Staging - TomerA"
+description: "EC2 workstation for staging workloads"
+state: active
+owner_email: tomer.a@quali.com
+blueprint:                                      
+  name: "test-workstation"
+  repository_name: "cloud-native-application"
+  branch: "main"
+  commit: "697d1a81fed31adf2eb9e75349def8245f80f87d"
+inputs:
+  service-account: "vido-sa"
+  agent: "review3-opa"
+grains:
+  create-ec2:
+      source:
+        commit: 697d1a81fed31adf2eb9e75349def8245f80f87d
+  configure-workstation:
+      source:
+        commit: 697d1a81fed31adf2eb9e75349def8245f80f87d
