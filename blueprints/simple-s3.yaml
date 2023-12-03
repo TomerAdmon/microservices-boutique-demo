@@ -29,6 +29,7 @@ grains:
   s3-bucket:
     kind: terraform
     spec:
+      auto-approve: false
       source:
         store: cloud-native-application
         path: terraform/simple-s3
