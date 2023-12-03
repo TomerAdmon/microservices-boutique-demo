@@ -18,5 +18,5 @@ jobs:
         space: Production
         torque_token: ${{ secrets.TORQUE_TOKEN }}
         environment_id: dqTBSSAxBEwQ
-        torque_hostname: review3.qualilabs.net
+        torque_hostname: https://review3.qualilabs.net/
         env_file_path: environments/dev.yaml
