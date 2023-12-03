@@ -1,0 +1,22 @@
+name: Upload and Test Webgame
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  check_change:
+    name: Plan Terraform update
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Plan update vs running env
+      id: plan-environment
+      uses: TomerAdmon/torque-plan-environment@main
+      with:
+        space: Production
+        torque_token: ${{ secrets.TORQUE_TOKEN }}
+        environment_id: zDsSfW32L3MW
+        torque_hostname: https://review3.qualilabs.net/
