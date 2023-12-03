@@ -18,3 +18,10 @@ resource "aws_s3_bucket" "bucket" {
     Environment = "Test"
   }
 }
+
+resource "aws_s3_bucket" "bucket1" {
+  bucket = var.name
+  tags = {
+    Environment = "Test1"
+  }
+}
