@@ -51,7 +51,7 @@ grains:
       scripts:
         post-tf-plan:
           source:
-            store: blueprints
+            store: cloud-native-application
             path: blueprints/scripts/no-changed-resources.sh
       
     # The terraform version that will be used to deploy the module
