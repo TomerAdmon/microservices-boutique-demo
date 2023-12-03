@@ -7,13 +7,13 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   check_change:
-    name: Plan Terraform update
+    name: Plan env update
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - name: Plan update vs running env
       id: plan-environment
-      uses: TomerAdmon/torque-plan-environment@2c31f94d317c5b2e09feef2cc66eee13b07e9fd9
+      uses: TomerAdmon/torque-plan-environment@32ae8ee33ab2f68812ca00a2f09caf9dcbc49d91
       with:
         space: Production
         torque_token: ${{ secrets.TORQUE_TOKEN }}
