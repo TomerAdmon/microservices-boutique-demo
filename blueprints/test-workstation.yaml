@@ -17,8 +17,6 @@ grains:
       agent:
         name: '{{ .inputs.agent }}'
         service-account: '{{ .inputs.service-account }}'
-      env-vars:
-        - TF_LOG: debug
       outputs:
         - public_ip
         - password
