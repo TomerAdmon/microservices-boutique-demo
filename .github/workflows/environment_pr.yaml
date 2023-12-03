@@ -19,4 +19,4 @@ jobs:
         torque_token: ${{ secrets.TORQUE_TOKEN }}
         environment_id: zDsSfW32L3MW
         torque_hostname: https://review3.qualilabs.net/
-        env_file_path: environments/production.yaml
+        env_file_path: environments/dev.yaml
