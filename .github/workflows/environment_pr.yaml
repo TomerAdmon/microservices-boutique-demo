@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Plan update vs running env
       id: plan-environment
-      uses: TomerAdmon/torque-plan-environment@c90c6994a9870c6503e5dbbb4dc0ffab3ec3bd71
+      uses: TomerAdmon/torque-plan-environment@fd77a22809391536da479080759663969f8d851c
       with:
         space: Production
         torque_token: ${{ secrets.TORQUE_TOKEN }}
