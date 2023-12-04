@@ -1,0 +1,22 @@
+spec_version: 2
+description: Launch a testing workstation
+
+inputs:
+  agent:
+    type: agent
+  service-account:
+    type: string
+
+grains:
+  create-ec2:
+    kind: terraform
+    spec:
+      source:
+        path: terraform/create-ec2-instance
+        store: cloud-native-application
+      agent:
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
+      outputs:
+        - public_ip
+        - password
