@@ -30,3 +30,4 @@ jobs:
         message: |
           **🚀🚀Torque PR results🚀🚀**
           ${{ steps.plan-environment.outputs.plan_result }}
+          For more information: https://review3.qualilabs.net/Production/sandboxes/R8t2T78FG1hS/devops
