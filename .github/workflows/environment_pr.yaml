@@ -28,6 +28,6 @@ jobs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          **🚀🚀Torque PR results🚀🚀**
+          **🚀🚀  Torque Environment plan results  🚀🚀**
           ${{ steps.plan-environment.outputs.plan_result }}
           For more information: https://review3.qualilabs.net/Production/sandboxes/R8t2T78FG1hS/devops
