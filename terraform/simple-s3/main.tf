@@ -12,6 +12,7 @@ provider "aws" {
   region = var.region
 }
 
+# nothing bad
 resource "aws_s3_bucket" "bucket" {
   bucket = var.name
   tags = {
