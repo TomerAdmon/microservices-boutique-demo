@@ -23,3 +23,14 @@ jobs:
         environment_id: R8t2T78FG1hS
         torque_hostname: https://review3.qualilabs.net/
         env_file_path: environments/dev.yaml
+  report:
+    needs: check_change
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **🚀🚀Torque PR results🚀🚀**
+            ${{ steps.check_change.outputs.plan_result }}
