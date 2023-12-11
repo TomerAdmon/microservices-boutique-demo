@@ -26,7 +26,7 @@ resource "torque_introspection_resource" "Leumi_endpoint" {
     introspection_data = {Farm = "Perfecto", Type = "Iphone 12 pro", Location = "Israel"}
 }
 
-resource "torque_introspection_resource" "Leumi_endpoint" {
+resource "torque_introspection_resource" "Leumi_backend" {
     display_name = "Backend Services"
     image = "https://d1ddbn3t5ac25u.cloudfront.net/blueprint_icons/66a61c1b-45a7-4b76-a7ee-6fc7d99d0419"
     introspection_data = {Address = "10.12.55.10", API = "v1.4"}
