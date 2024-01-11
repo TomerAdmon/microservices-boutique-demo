@@ -9,8 +9,8 @@ blueprint:
   branch: "main"
   commit: "536955389cd4ecbd1b8895c4a1093fe14a809b65"
 inputs:
-  service-account: "vido-sa"
-  agent: "review3-opa"
+  service-account: "app-sa"
+  agent: "demo-prod"
 grains:
   create-ec2:
       source:
