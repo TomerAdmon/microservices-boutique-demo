@@ -14,7 +14,7 @@ inputs:
 grains:
   create-ec2:
       source:
-        commit: 697d1a81fed31adf2eb9e75349def8245f80f87d
+        commit: 286bf9eb8983e2c96d596edf37653cd266742cfe
   configure-workstation:
       source:
         commit: 697d1a81fed31adf2eb9e75349def8245f80f87d
