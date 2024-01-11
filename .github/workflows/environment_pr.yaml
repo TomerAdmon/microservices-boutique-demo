@@ -3,7 +3,7 @@ name: Environment updates pipeline
 on:
   pull_request:
     branches:
-    - main
+      - main
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -15,19 +15,19 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-    - uses: actions/checkout@master
-    - name: Plan update vs running env
-      id: plan-environment
-      uses: TomerAdmon/torque-plan-environment@68b509d9526d374ffe1159e4aa34cbb4cc7ce025
-      with:
-        space: Production
-        torque_token: ${{ secrets.TORQUE_TOKEN }}
-        environment_id: R8t2T78FG1hS
-        torque_hostname: https://review3.qualilabs.net/
-        env_file_path: environments/dev.yaml
-    - uses: mshick/add-pr-comment@v2
-      with:
-        message: |
-          **🚀🚀  Torque Environment plan results  🚀🚀**
-          ${{ steps.plan-environment.outputs.plan_result }}
-          For more information: https://review3.qualilabs.net/Production/sandboxes/R8t2T78FG1hS/devops
+      - uses: actions/checkout@master
+      - name: Plan update vs running env
+        id: plan-environment
+        uses: TomerAdmon/torque-plan-environment@68b509d9526d374ffe1159e4aa34cbb4cc7ce025
+        with:
+          space: 08-Plaform-Services
+          torque_token: ${{ secrets.TORQUE_TOKEN }}
+          environment_id: Gwvl2e3Tqoe9
+          torque_hostname: https://portal.qtorque.io/
+          env_file_path: environments/dev.yaml
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **🚀🚀  Torque Environment plan results  🚀🚀**
+            ${{ steps.plan-environment.outputs.plan_result }}
+            For more information: https://portal.qtorque.io/08-Plaform-Services/sandboxes/Gwvl2e3Tqoe9/devops
