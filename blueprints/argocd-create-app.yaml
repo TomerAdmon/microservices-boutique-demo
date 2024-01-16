@@ -1,12 +1,13 @@
 spec_version: 2
 description: 'ArgoCD | Create Nginx App'
+
 inputs:
   agent:
     default: dev-playground-eks
     type: agent
-outputs: {}
+
 grains:
-  argocd:
+  create-argo-app:
     kind: kubernetes
     spec:
       sources:
@@ -15,5 +16,15 @@ grains:
       target-namespace: 'argocd'  
       agent:
         name: '{{ .inputs.agent }}'
+        
+  view-workloads:
+    depends-on: create-argo-app
+    kind: argocd
+    spec:
+      agent:
+        name: '{{ .inputs.agent }}'
+      mode: data
+      project: '{{.inputs.project}}'
+      application: 'nginx-app' # should be passed as a param
 
   
