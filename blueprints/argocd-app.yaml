@@ -1,5 +1,5 @@
 spec_version: 2
-description: connect to existing applications on ArgoCD server
+description: 'View App Workloads by app name | Connect to existing applications on ArgoCD server'
 
 inputs:
   infra-app-name:
