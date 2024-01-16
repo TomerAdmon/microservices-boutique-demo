@@ -24,7 +24,7 @@ grains:
       agent:
         name: '{{ .inputs.agent }}'
       mode: data
-      project: '{{.inputs.project}}'
+      project: 'default' # should be passed as a param
       application: 'nginx-app' # should be passed as a param
 
   
