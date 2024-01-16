@@ -11,7 +11,7 @@ grains:
     spec:
       sources:
       - store: cloud-native-application
-        path: argocd/apps/argo-app-nginx.yaml
+        path: argocd/apps/argo-nginx.yaml
       target-namespace: 'argocd'  
       agent:
         name: '{{ .inputs.agent }}'
