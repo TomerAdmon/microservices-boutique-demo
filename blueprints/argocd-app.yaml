@@ -2,9 +2,11 @@ spec_version: 2
 description: connect to existing applications on ArgoCD server
 
 inputs:
-  application_name1:
+  infra-app-name:
+    default: sveta-s3-upbound
     type: string
-  application_name2:
+  app-name:
+    default: sveta-nginx-deployment
     type: string
   project:
     type: string
@@ -13,20 +15,21 @@ inputs:
     type: agent
 
 grains:
-  argo-app1:
+  argocd-infra:
     kind: argocd
     spec:
       agent:
         name: '{{.inputs.agent_name}}'
       mode: data
       project: '{{.inputs.project}}'
-      application: '{{.inputs.application_name1}}'
+      application: '{{.inputs.infra-app-name}}'
   
-  argo-app2:
+  argocd-app:
+    depends-on: argocd-infra
     kind: argocd
     spec:
       agent:
         name: '{{.inputs.agent_name}}'
       mode: data
       project: '{{.inputs.project}}'
-      application: '{{.inputs.application_name2}}'
+      application: '{{.inputs.app-name}}'
