@@ -1,11 +1,9 @@
 spec_version: 2
-description: Torque auto generated blueprint
-# blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
+description: 'ArgoCD | Create Nginx App'
 inputs:
   agent:
     default: dev-playground-eks
     type: agent
-# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
 outputs: {}
 grains:
   argocd:
@@ -16,8 +14,6 @@ grains:
         path: argocd/argo-app-nginx.yaml
       target-namespace: 'argocd'  
       agent:
-      # The Torque agent that will be used to provision the environment.
         name: '{{ .inputs.agent }}'
-      env-vars: []
 
   
