@@ -22,12 +22,12 @@ jobs:
         with:
           space: 08-Plaform-Services
           torque_token: ${{ secrets.TORQUE_TOKEN }}
-          environment_id: Gwvl2e3Tqoe9
+          environment_id: BqWznF8BreXS
           torque_hostname: https://portal.qtorque.io/
-          env_file_path: environments/dev.yaml
+          env_file_path: environments/devbox-dbs.yaml
       - uses: mshick/add-pr-comment@v2
         with:
           message: |
             **🚀🚀  Torque Environment plan results  🚀🚀**
             ${{ steps.plan-environment.outputs.plan_result }}
-            For more information: https://portal.qtorque.io/08-Plaform-Services/sandboxes/Gwvl2e3Tqoe9/devops
+            For more information: https://portal.qtorque.io/08-Plaform-Services/sandboxes/BqWznF8BreXS/devops
