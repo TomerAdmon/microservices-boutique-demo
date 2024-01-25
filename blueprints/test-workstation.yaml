@@ -10,6 +10,7 @@ inputs:
 grains:
   create-ec2:
     kind: terraform
+    auto-approve: false
     spec:
       source:
         path: terraform/create-ec2-instance
