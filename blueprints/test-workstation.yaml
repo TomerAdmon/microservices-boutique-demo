@@ -10,8 +10,8 @@ inputs:
 grains:
   create-ec2:
     kind: terraform
-    auto-approve: false
     spec:
+      auto-approve: false
       source:
         path: terraform/create-ec2-instance
         store: cloud-native-application
