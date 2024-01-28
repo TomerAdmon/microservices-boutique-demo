@@ -1,7 +1,7 @@
 kind: environment
 environment_name: "Devbox Workstation - DBS"
 description: "EC2 workstation for developer"
-state: inactive
+state: active
 owner_email: david.b@quali.com
 blueprint:
   name: "test-workstation"
