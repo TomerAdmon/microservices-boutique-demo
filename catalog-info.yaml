@@ -171,7 +171,8 @@ metadata:
   annotations:
     "torque.io/space": "03-Live"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "cli/torque-cli-docker"
+    jenkins.io/job-full-name: 'cli/torque-cli-docker'
+    github.com/project-slug: 'QualiNext/cs2018'
   tags:
     - retail
 spec:
