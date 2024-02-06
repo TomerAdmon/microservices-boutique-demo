@@ -16,7 +16,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "torque-cli-docker"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -39,7 +39,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -61,7 +61,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -83,7 +83,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -105,7 +105,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -127,7 +127,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -149,7 +149,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -169,9 +169,9 @@ metadata:
   name: checkout
   description: checkout microservice
   annotations:
-    "torque.io/space": "01-Development"
+    "torque.io/space": "03-Live"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "torque-cli-docker"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -193,7 +193,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -215,7 +215,7 @@ metadata:
   annotations:
     "torque.io/space": "03-Live"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
 spec:
@@ -237,7 +237,7 @@ metadata:
   annotations:
     "torque.io/space": "01-Development"
     "torque.io/lifecycle": "activity_type"
-    "jenkins.io/job-full-name": "folder-name/job-name"
+    "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
     - tools
