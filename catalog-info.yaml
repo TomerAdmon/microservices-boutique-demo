@@ -20,7 +20,7 @@ metadata:
   tags:
     - retail
 spec:
-  type: service
+  type: aws
   owner: retail-team
   lifecycle: production
   system: retail
