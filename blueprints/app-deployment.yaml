@@ -65,5 +65,6 @@ grains:
       activities:
         deploy:
           commands:
+            - "apt-get update -y"
             - "apt-get -y install curl"
             - "export FRONTEND_URL=http://{{ .grains.services.scripts.post-helm-install.outputs.frontend }} && curl https://gist.githubusercontent.com/TomerAdmon/d8b23b7c0d67b396c4a352a2e0981612/raw/244548d7aa1544b342feeb52e8aae788d05ec171/wait_for_website.sh | /bin/bash"
