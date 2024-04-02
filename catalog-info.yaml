@@ -14,8 +14,8 @@ metadata:
   name: cart
   description: cart microservice
   annotations:
-    torque.io/space: "01-Development"
-    torque.io/environment: "Online Boutique Development"
+    torque.io/space: "03-Live"
+    torque.io/environment: "Webgame"
     jenkins.io/job-full-name: "cli/torque-cli-docker"
   tags:
     - retail
