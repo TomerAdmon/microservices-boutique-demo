@@ -15,7 +15,7 @@ metadata:
   description: cart microservice
   annotations:
     torque.io/space: "03-Live"
-    torque.io/environment: "Webgame"
+    torque.io/environment: "Webgame on S3 with Healthcheck (TF + Shell)-20240402T18371076"
     jenkins.io/job-full-name: "cli/torque-cli-docker"
   tags:
     - retail
