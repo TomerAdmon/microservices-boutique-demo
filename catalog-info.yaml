@@ -15,7 +15,7 @@ metadata:
   description: cart microservice
   annotations:
     torque.io/space: "03-Live"
-    torque.io/environment: "Webgame on S3 with Healthcheck (TF + Shell)-20240402T18371076"
+    torque.io/environment: "Webgame on S3"
     jenkins.io/job-full-name: "cli/torque-cli-docker"
   tags:
     - retail
@@ -37,8 +37,8 @@ metadata:
   name: frontend
   description: frontend microservice
   annotations:
-    "torque.io/space": "01-Development"
-    "torque.io/lifecycle": "activity_type"
+    torque.io/space: "01-Development"
+    torque.io/environment: "hello_world"
     "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
@@ -59,8 +59,7 @@ metadata:
   name: product-catalog
   description: product-catalog microservice
   annotations:
-    "torque.io/space": "01-Development"
-    "torque.io/lifecycle": "activity_type"
+    torque.io/space: "03-Live"
     "jenkins.io/job-full-name": "cli/torque-cli-docker"
   tags:
     - retail
