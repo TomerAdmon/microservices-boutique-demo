@@ -5,6 +5,8 @@ description: Online Boutique production-like deployment for AWS
 inputs:
   cluster_endpoint:
     type: string
+  agent:
+    type: agent
 
 # blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
 outputs:
@@ -17,11 +19,11 @@ grains:
     kind: helm
     spec:
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: helm-chart-splitted/services
       agent:
       # The Torque agent that will be used to provision the environment.
-        name: demo-dev
+        name: '{{ .inputs.agent }}'
         # A service account annotated with a role ARN with permissions to run the asset
         # service-account: <service-account-name>
       # Helm commands to run before installing the chart
@@ -30,7 +32,7 @@ grains:
       scripts:
         post-helm-install:
           source:
-            store: assets
+            store: cloud-native-application
             path: scripts/get-external-frontend-extended.sh
           outputs:
             - frontend
@@ -39,11 +41,11 @@ grains:
     kind: helm
     spec:
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: helm-chart-splitted/cart-service
       agent:
       # The Torque agent that will be used to provision the environment.
-        name: demo-dev
+        name:  '{{ .inputs.agent }}'
         # A service account annotated with a role ARN with permissions to run the asset
         # service-account: <service-account-name>
       inputs:
@@ -58,7 +60,7 @@ grains:
     spec:
       agent:
       # The Torque agent that will be used to provision the environment.
-        name: demo-dev
+        name:  '{{ .inputs.agent }}'
         service-account: torque-dev-sa
       env-vars:
       - FRONTEND_URL: 'http://{{ .grains.services.scripts.post-helm-install.outputs.frontend }}'

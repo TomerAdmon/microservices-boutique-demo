@@ -1,0 +1,59 @@
+spec_version: 2
+description: A simple S3 bucket deployment example
+# blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
+inputs:
+  agent:
+    type: agent
+  encryption_key_arn:
+    type: string
+    default: ''
+    sensitive: true
+  name:
+    type: string
+    default: 'null'
+    description: Region where to create resources
+  region:
+    type: string
+    default: eu-west-1
+    description: Region where to create resources
+
+# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
+outputs:
+  name:
+    value: '{{ .grains.s3-bucket.outputs.name }}'
+    quick: true
+  s3_bucket_id:
+    value: '{{ .grains.s3-bucket.outputs.s3_bucket_id }}'
+    quick: true
+grains:
+  s3-bucket:
+    kind: terraform
+    spec:
+      auto-approve: false
+      source:
+        store: cloud-native-application
+        path: terraform/simple-s3
+      agent:
+      # The Torque agent that will be used to provision the environment.
+        name: '{{ .inputs.agent }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs:
+      - encryption_key_arn: '{{ .inputs.encryption_key_arn }}'
+      - name: '{{ .inputs.name }}'
+      - region: '{{ .inputs.region }}'
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      outputs:
+      - name
+      - s3_bucket_id
+      scripts:
+        post-tf-plan:
+          source:
+            store: cloud-native-application
+            path: blueprints/scripts/no-changed-resources.sh
+      
+    # The terraform version that will be used to deploy the module
+    tf-version: 1.5.5

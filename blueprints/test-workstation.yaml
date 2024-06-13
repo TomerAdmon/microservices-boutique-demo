@@ -1,18 +1,22 @@
 spec_version: 2
 description: Launch a testing workstation
 
+inputs:
+  agent:
+    type: agent
+  service-account:
+    type: string
+
 grains:
   create-ec2:
     kind: terraform
     spec:
       source:
         path: terraform/create-ec2-instance
-        store: microservices-boutique-demo
+        store: cloud-native-application
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
-      env-vars:
-        - TF_LOG: debug
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
         - public_ip
         - password
@@ -22,11 +26,11 @@ grains:
     depends-on: create-ec2
     spec: 
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: ansible/install_nginx_on_ec2.yaml
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inventory-file:
         all:
           hosts:

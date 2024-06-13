@@ -1,6 +1,12 @@
 spec_version: 2
 description: Auto generated blueprint for terraform module terraform-aws-elasticache-redis
 
+inputs:
+  agent:
+    type: agent
+  service-account:
+    type: string
+
 outputs:
   cluster_endpoint:
     value: '{{ .grains.elasticache-simple.outputs.cluster_endpoint }}'
@@ -12,11 +18,11 @@ grains:
     kind: blueprint
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
       - private_subnet_ids
       - public_subnet_ids
@@ -29,11 +35,11 @@ grains:
     depends-on: base-network
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs:
       - cluster_size: 1
       - public_subnet_ids: '{{ .grains.network.outputs.public_subnet_ids }}'

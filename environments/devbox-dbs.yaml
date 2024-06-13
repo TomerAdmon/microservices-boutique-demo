@@ -1,0 +1,20 @@
+kind: environment                               
+environment_name: "Devbox Workstation - DBS"
+description: "EC2 workstation for developer"
+state: inactive
+owner_email: david.b@quali.com
+blueprint:                                      
+  name: "test-workstation"
+  repository_name: "cloud-native-application"
+  branch: "main"
+  commit: "536955389cd4ecbd1b8895c4a1093fe14a809b65"
+inputs:
+  service-account: "app-sa"
+  agent: "demo-prod"
+grains:
+  create-ec2:
+      source:
+        commit: 286bf9eb8983e2c96d596edf37653cd266742cfe
+  configure-workstation:
+      source:
+        commit: 697d1a81fed31adf2eb9e75349def8245f80f87d

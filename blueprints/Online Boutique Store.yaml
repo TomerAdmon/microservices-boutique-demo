@@ -3,7 +3,7 @@ description: Online Boutique production-like deployment for AWS
 
 instructions:
   source:
-    store: microservices-boutique-demo
+    store: cloud-native-application
     path: instructions/OBS.md
 
 inputs:
@@ -15,17 +15,21 @@ inputs:
   namespace:
     type: string
     default: "app-deployment"
+  agent:
+    type: agent
+  service-account:
+    type: string
     
 grains:
   elasticache-complete:
     kind: blueprint
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       outputs:
         - cluster_endpoint
         - vpc_id
@@ -35,11 +39,11 @@ grains:
     depends-on: elasticache-complete
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs: 
         - peer_vpc_id: '{{ .grains.elasticache-complete.outputs.vpc_id }}'
         - vpc_peering_name: 'pcx-{{ sandboxid | downcase }}'

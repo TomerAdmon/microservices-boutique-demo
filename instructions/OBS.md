@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" style="background-color: #272a2e;" width="300" alt="Online Boutique" />
+<img src="https://raw.githubusercontent.com/TomerAdmon/cloud-native-application/main/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" style="background-color: #272a2e;" width="300" alt="Online Boutique" />
 </p>
 
 ### Online Boutique is a cloud-first microservices demo application. Online Boutique consists of an 11-tier microservices application. The application is a web-based e-commerce app where users can browse items, add them to the cart, and purchase them.
@@ -8,14 +8,14 @@
 Google uses this application to demonstrate the use of technologies like Kubernetes, GKE, Istio, Stackdriver, and gRPC. This application works on any Kubernetes cluster, like Google Kubernetes Engine (GKE). It’s easy to deploy with little to no configuration.
 
 ## Infrastructure Architecture 
-[![Architecture of infrastructure](https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/instructions/1aws.png)
+[![Architecture of infrastructure](https://raw.githubusercontent.com/TomerAdmon/cloud-native-application/main/instructions/1aws.png)
 
 ## Application Architecture 
 
 **Online Boutique** is composed of 11 microservices written in different
 languages that talk to each other over gRPC.
 
-[![Architecture of microservices](https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/docs/img/architecture-diagram.png)](https://raw.githubusercontent.com/TomerAdmon/microservices-boutique-demo/main/docs/img/architecture-diagram.png)
+[![Architecture of microservices](https://raw.githubusercontent.com/TomerAdmon/cloud-native-application/main/docs/img/architecture-diagram.png)](https://raw.githubusercontent.com/TomerAdmon/cloud-native-application/main/docs/img/architecture-diagram.png)
 
 
 Find **Protocol Buffers Descriptions** at the [`./protos` directory](/protos).

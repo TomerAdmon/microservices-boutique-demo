@@ -15,7 +15,7 @@ grains:
     kind: helm
     spec:
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
         name: demo-dev
@@ -39,7 +39,7 @@ grains:
     spec:
       namespace: '{{ .inputs.namespace }}'
       source: 
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: blueprints
       agent:
         name: demo-dev
