@@ -1,0 +1,35 @@
+spec_version: 2
+description: 'View App Workloads by app name | Connect to existing applications on ArgoCD server'
+
+inputs:
+  infra-app-name:
+    default: sveta-s3-upbound
+    type: string
+  app-name:
+    default: sveta-nginx-deployment
+    type: string
+  project:
+    type: string
+    default: default
+  agent_name:
+    type: agent
+
+grains:
+  argocd-infra:
+    kind: argocd
+    spec:
+      agent:
+        name: '{{.inputs.agent_name}}'
+      mode: data
+      project: '{{.inputs.project}}'
+      application: '{{.inputs.infra-app-name}}'
+  
+  argocd-app:
+    depends-on: argocd-infra
+    kind: argocd
+    spec:
+      agent:
+        name: '{{.inputs.agent_name}}'
+      mode: data
+      project: '{{.inputs.project}}'
+      application: '{{.inputs.app-name}}'

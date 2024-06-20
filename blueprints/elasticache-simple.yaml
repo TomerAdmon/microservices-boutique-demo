@@ -16,6 +16,10 @@ inputs:
     type: string
   vpc_default_security_group_id:
     type: string
+  agent:
+    type: agent
+  service-account:
+    type: string
 
 # blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
 outputs:
@@ -42,12 +46,12 @@ grains:
       tags:
         auto-tag: false
       source:
-        store: microservices-boutique-demo
+        store: cloud-native-application
         path: terraform/elasticache-redis
       agent:
       # The Torque agent that will be used to provision the environment.
-        name: demo-dev
-        service-account: torque-dev-sa
+        name: '{{ .inputs.agent }}'
+        service-account: '{{ .inputs.service-account }}'
       inputs:
       - public_subnet_ids: '{{ .inputs.public_subnet_ids }}'
       - private_subnet_ids: '{{ .inputs.private_subnet_ids }}'

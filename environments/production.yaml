@@ -1,0 +1,20 @@
+kind: environment                               
+environment_name: "Workstation Production - DBS"
+description: "EC2 workstation for production workloads"
+state: inactive
+owner_email: david.b@quali.com
+blueprint:                                      
+  name: "test-workstation"
+  repository_name: "cloud-native-application"
+  branch: "main"
+  commit: "697d1a81fed31adf2eb9e75349def8245f80f87d"
+inputs:
+  service-account: "app-sa"
+  agent: "demo-prod"
+grains:
+  create-ec2:
+      source:
+        commit: 697d1a81fed31adf2eb9e75349def8245f80f87d
+  configure-workstation:
+      source:
+        commit: 697d1a81fed31adf2eb9e75349def8245f80f87d

@@ -1,0 +1,36 @@
+name: Terraform module pipeline
+# Controls when the workflow will run
+on:
+# Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    paths:
+      - 'terraform/create-ec2-instance/*.*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ephemeral_test_terraform:
+    name: launch terraform module within Torque to validate it
+    runs-on: ubuntu-latest
+    steps:
+    - name: Start Environment from Blueprint
+      id: start-environment
+      uses: QualiTorque/torque-start-environment@v1
+      with:
+        space: Production
+        torque_token: ${{ secrets.TORQUE_TOKEN }}
+        torque_hostname: https://review3.qualilabs.net/
+        blueprint_name: EC2
+        repository_name: cloud-native-application
+        inputs: 'agent=review3-opa, service-account=vido-sb'
+        timeout: 15
+        duration: 15
+    - name: End Environment
+      uses: QualiTorque/torque-end-environment@v1
+      with:
+        space: Production
+        torque_token: ${{ secrets.TORQUE_TOKEN }}
+        environment_id: ${{ steps.start-environment.outputs.environment_id }}
+        torque_hostname: https://review3.qualilabs.net/
